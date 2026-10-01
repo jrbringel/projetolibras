@@ -119,7 +119,10 @@ def main():
     if cap is None:
         raise RuntimeError("Nao consegui abrir a camera.")
 
-    label = input("Qual sinal vamos coletar? (ex: bom_dia): ").strip()
+    label = input("Qual sinal vamos coletar? (ex: bom_dia): ").strip().lower().replace(" ", "_")
+    while not label:
+        label = input("Digite o nome do sinal (ex: bom_dia): ").strip().lower().replace(" ", "_")
+    print(f"Sinal: {label} | tecla S grava uma amostra, Q encerra e salva.")
     dados_coletados = []
 
     cv2.namedWindow("COLETOR LIBRAS", cv2.WINDOW_NORMAL)

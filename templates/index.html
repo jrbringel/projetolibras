@@ -1,0 +1,1271 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>IVY LIBRAS — Atendimento policial acessível</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#063b73">
+<style>
+:root{--blue:#0874d1;--blue2:#0756a0;--dark:#063b73;--bg:#eef6fb;--line:#d7e5ef;--muted:#667788;--ok:#137a52;--warn:#8a5a00;--danger:#a72d2d;--card:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:linear-gradient(135deg,#eaf5ff,#fff);color:#111}
+button,input,select,textarea{font:inherit;color:#111}button{cursor:pointer}.app{max-width:1280px;margin:20px auto;background:#fff;border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 20px 60px #063b731c}
+header{background:linear-gradient(135deg,var(--dark),var(--blue));color:#fff;padding:20px 26px;display:flex;justify-content:space-between;gap:16px;align-items:center}header *{color:#fff}.brand{font-size:24px;font-weight:800}.brand small{display:block;font-size:12px;font-weight:400;opacity:.88;margin-top:3px}.status{font-size:12px;border:1px solid #ffffff42;background:#ffffff18;padding:8px 12px;border-radius:999px}
+.topnav{display:flex;gap:8px;flex-wrap:wrap;padding:12px 18px;border-bottom:1px solid var(--line);background:#f8fbfe}.topnav button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;font-weight:700}.topnav button.active{background:#eaf5ff;border-color:var(--blue);color:var(--dark)}
+.screen{display:none;padding:26px}.screen.active{display:block;animation:screenIn .32s ease}@keyframes screenIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}h1,h2,h3{color:#111;margin-top:0}.sub{color:#444;line-height:1.55}.notice{padding:12px 14px;border-radius:12px;background:#f5faff;border:1px solid #dceaf5;font-size:13px;line-height:1.5}.warn{background:#fff8e8;border-color:#f2deb0}.ok{background:#effaf5;border-color:#cfe9dc;color:#174f39}
+.mode-grid,.org-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}.org-grid{grid-template-columns:repeat(2,1fr)}.mode,.org{padding:20px;border:1px solid var(--line);border-radius:16px;background:#fff;text-align:left}.mode:hover,.org:hover,.mode.sel,.org.sel{border-color:var(--blue);background:#f4faff}.mode b,.org b{font-size:17px;display:block;margin:4px 0;color:#111}.mode small,.org small{color:#555}
+.btn{border:0;border-radius:10px;padding:11px 15px;font-weight:800}.primary{background:var(--blue);color:#fff}.secondary{background:#edf6fc;color:#111}.danger{background:#fff0f0;color:var(--danger)}.green{background:#49e6a5;color:#073b2b}.darkbtn{background:#183c5b;color:#fff}.actions{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:18px}
+.workspace{display:grid;grid-template-columns:1.55fr .7fr;gap:16px}.panel{border:1px solid var(--line);border-radius:16px;background:#fff;overflow:hidden}.panel-head{padding:14px 16px;border-bottom:1px solid var(--line);background:#f8fbfe;display:flex;justify-content:space-between;align-items:center;gap:10px}.panel-body{padding:16px}.mode-badge{font-size:11px;font-weight:800;border-radius:999px;padding:6px 9px;background:#eaf5ff;color:#111}
+.chatlog{height:420px;overflow:auto;background:#f8fbfe;border:1px solid var(--line);border-radius:14px;padding:12px}.msg{max-width:86%;padding:11px 13px;border-radius:14px;margin:8px 0;line-height:1.45;white-space:pre-wrap}.msg.ivy{background:#eaf5ff;border-bottom-left-radius:5px}.msg.user{background:var(--blue);color:#fff;margin-left:auto;border-bottom-right-radius:5px}.msg.police{background:#fff3d8;border:1px solid #f0db9b}.msg small{display:block;margin-top:5px;font-size:10px;opacity:.7}.msg.user *{color:#fff}
+.quick{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.quick button{border:1px solid #cfe3f3;background:#fff;border-radius:10px;padding:8px 10px;font-weight:700}.quick button:hover{background:#eaf5ff}.composer{display:flex;gap:8px;margin-top:10px}.composer input{flex:1;border:1px solid #cbdbe7;border-radius:10px;padding:12px}.voice-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.voice-tools button{border:1px solid #cfe3f3;background:#fff;border-radius:10px;padding:9px 11px;font-weight:700}.listening{background:#effaf5!important;border-color:#73c79f!important}.muted{color:#555;font-size:12px}
+.camera-box{display:none;margin-top:14px;background:#071b2b;border-radius:16px;padding:12px;color:#fff}.camera-box *{color:#fff}.camera-box.show{display:block}.frame{aspect-ratio:16/9;width:100%;min-height:220px;max-height:min(42vh,420px);background:#102d43;border-radius:12px;overflow:hidden;position:relative;display:grid;place-items:center}.frame video{width:100%;height:100%;object-fit:cover;display:none}.frame .hint{text-align:center;color:#d8e9f6;padding:20px;max-width:520px}.frame .guide{position:absolute;inset:8%;border:2px solid #49e6a5;border-radius:16px;pointer-events:none}
+#attendScreen .workspace > .panel:first-child .panel-body{display:flex;flex-direction:column}
+#attendScreen #chatLog{order:2}#attendScreen #quickReplies{order:3}#attendScreen .composer{order:4}#attendScreen #voiceTools{order:5}#attendScreen #voiceStatus{order:6}#attendScreen #cameraBox{order:7}#attendScreen #librasHelp{order:8}
+body.mode-libras #attendScreen #chatLog{order:1;height:210px}
+body.mode-libras #attendScreen #quickReplies{order:2}
+body.mode-libras #attendScreen .composer{order:3}
+body.mode-libras #attendScreen #voiceTools{order:6}
+body.mode-libras #attendScreen #voiceStatus{order:7}
+body.mode-libras #attendScreen #cameraBox{order:4;margin-top:12px;margin-bottom:0}
+body.mode-libras #attendScreen #librasHelp{order:5}.cam-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.recording{background:#ffecec!important;color:#8e2222!important}.record-preview{display:none;width:100%;margin-top:10px;border-radius:12px;background:#000}.libras-help{display:none;margin-top:12px}.libras-help.show{display:block}
+.data-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.data-item{padding:10px;border:1px solid #e0ebf3;border-radius:10px;background:#fff;font-size:12px;min-height:55px}.data-item b{display:block;font-size:10px;color:#555;margin-bottom:4px}.data-item span{font-weight:700}.missing{color:#8b5a00!important;font-weight:600!important}.section-title{margin:16px 0 8px;font-size:13px;color:#333;text-transform:uppercase;letter-spacing:.5px}
+.edit-form{display:grid;grid-template-columns:1fr 1fr;gap:9px}.field label{display:block;font-size:11px;font-weight:800;margin-bottom:5px;color:#333}.field input,.field select,.field textarea{width:100%;border:1px solid #cbdbe7;border-radius:9px;padding:9px;background:#fff}.field textarea{min-height:90px}.full{grid-column:1/-1}
+.police-layout{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}.police-feed{height:440px;overflow:auto;background:#f8fbfe;border:1px solid var(--line);border-radius:12px;padding:12px}.police-compose{display:flex;gap:8px;margin-top:10px}.police-compose input{flex:1;border:1px solid #cbdbe7;border-radius:9px;padding:10px}
+.report{border:1px solid #aebbc5;background:#fff}.report-header{text-align:center;padding:18px;border-bottom:1px solid #aaa}.report-header h2{margin:0 0 5px;font-size:18px}.report-title{background:#dfe3e6;text-align:center;padding:8px;font-weight:800}.report-grid{display:grid;grid-template-columns:1fr 1fr}.report-cell{padding:9px 11px;border-right:1px solid #c2cbd1;border-bottom:1px solid #c2cbd1;min-height:50px;font-size:12px}.report-cell:nth-child(2n){border-right:0}.report-cell.full{grid-column:1/-1;border-right:0}.report-cell b{display:block;font-size:9px;color:#555;margin-bottom:4px}.prototype{padding:12px;text-align:center;font-size:11px;font-weight:800;color:#a72d2d}
+@media(max-width:900px){.workspace,.police-layout{grid-template-columns:1fr}.mode-grid{grid-template-columns:1fr}.org-grid{grid-template-columns:1fr}.chatlog{height:390px}}@media(max-width:600px){.app{margin:0;border-radius:0}.screen{padding:18px}.data-grid,.edit-form,.report-grid,.report-person-grid{grid-template-columns:1fr}.report-cell,.report-person-field{border-right:0}.composer{flex-direction:column}}
+
+
+.involved-section{margin-top:18px;padding-top:16px;border-top:1px solid #e0ebf3}.involved-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px}.involved-list{display:grid;gap:9px}.involved-card{border:1px solid #dce8f1;border-radius:12px;background:#f8fbfe;padding:11px}.involved-card-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.involved-card strong{color:#111}.involved-card small{display:block;color:#555;margin-top:3px;line-height:1.4}.involved-actions{display:flex;gap:6px;flex-wrap:wrap}.mini-btn{border:1px solid #cbdbe7;background:#fff;color:#0756a0;border-radius:8px;padding:6px 9px;font-size:11px;font-weight:800;cursor:pointer}.mini-btn.danger{color:#a72d2d;border-color:#ebcaca}.involved-form-box{display:none;margin-top:12px;padding:13px;border:1px solid #cfe1ee;border-radius:12px;background:#fff}.involved-form-box.show{display:block}.involved-form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}.empty-involved{font-size:12px;color:#666;padding:10px;border:1px dashed #cbdbe7;border-radius:10px;text-align:center}
+.share-panel{margin-top:18px;padding:16px;border:1px solid var(--line);border-radius:14px;background:#f8fbfe}
+.share-panel h3{margin:0 0 7px;color:#111}.share-panel p{margin:0 0 12px;color:#444;line-height:1.45}.share-actions{display:flex;gap:9px;flex-wrap:wrap}.share-actions .btn{flex:1;min-width:170px}.share-status{margin-top:10px;font-size:12px;color:#555}.share-status.ok{color:#17663b}.share-status.warn{color:#8a5a00}
+.report-bar{margin:0 0 18px;padding:16px;border:1px solid var(--line);border-radius:14px;background:#f8fbfe}
+.report-bar .actions{margin-top:12px}
+.report-bar .actions .btn{flex:1;min-width:160px}
+.report-people-block{padding:12px;background:#f8fbfe;border-bottom:1px solid #c2cbd1}
+.report-person-card{border:1px solid #aebbc5;border-radius:10px;background:#fff;margin:0 0 12px;overflow:hidden;break-inside:avoid;page-break-inside:avoid}
+.report-person-card:last-child{margin-bottom:0}
+.report-person-title{background:#eef4f8;padding:9px 11px;font-weight:800;font-size:12px;color:#111;border-bottom:1px solid #c2cbd1}
+.report-person-grid{display:grid;grid-template-columns:1fr 1fr}
+.report-person-field{padding:8px 10px;border-right:1px solid #d5dde3;border-bottom:1px solid #d5dde3;min-height:48px;font-size:11px}
+.report-person-field:nth-child(2n){border-right:0}
+.report-person-field.full{grid-column:1/-1;border-right:0}
+.report-person-field b{display:block;font-size:9px;color:#555;margin-bottom:4px}
+.report-person-empty{padding:14px;text-align:center;font-size:12px;color:#666;background:#fff;border:1px dashed #bfcbd4;border-radius:9px}
+@media print{body{background:#fff}.app{max-width:none;margin:0;border:0;box-shadow:none}.topnav,header,.screen:not(#reportScreen),#reportScreen .no-print{display:none!important}#reportScreen{display:block!important;padding:0}.report{border:1px solid #555}}
+
+.flow-guide{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin:18px 0 24px;padding:12px 14px;border:1px solid #dceaf5;border-radius:14px;background:#f8fbfe}.flow-step{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:800;color:#333}.flow-step .num{width:27px;height:27px;border-radius:50%;display:grid;place-items:center;background:#eaf5ff;color:#0756a0}.flow-arrow{font-size:22px;color:#0874d1;font-weight:900}.next-hint{display:none;margin:10px 0 18px;text-align:center;font-size:15px;font-weight:800;color:#0756a0;animation:hintBounce 1.1s ease-in-out infinite alternate}.next-hint.show{display:block}.start-arrow-btn{min-width:260px;padding:15px 24px!important;font-size:17px!important;box-shadow:0 10px 24px rgba(8,116,209,.22);display:inline-flex;align-items:center;justify-content:center;gap:12px}.start-arrow-btn .big-arrow{font-size:26px;line-height:1;animation:arrowMove .8s ease-in-out infinite alternate}@keyframes arrowMove{from{transform:translateX(0)}to{transform:translateX(7px)}}@keyframes hintBounce{from{transform:translateY(0)}to{transform:translateY(4px)}}@media(max-width:600px){.flow-guide{justify-content:flex-start}.flow-arrow{transform:rotate(90deg)}.start-arrow-btn{width:100%;min-width:0}}
+
+body{font-family:"Segoe UI",Arial,sans-serif}
+.status{max-width:min(320px,46vw);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.workspace,.police-layout{align-items:start}
+.workspace{grid-template-columns:minmax(0,1.55fr) minmax(0,.78fr)}
+.police-layout{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)}
+.mode-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.org-grid,.data-grid,.edit-form,.report-grid,.report-person-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.field,.data-item,.report-cell,.report-person-field,.panel,.panel-body{min-width:0}
+input,textarea,select{max-width:100%}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--blue);outline-offset:1px;border-color:var(--blue)}
+.composer input,.police-compose input{min-width:0}
+textarea{resize:vertical;max-height:140px}
+.msg,.data-item span,.report-cell,.report-person-field,.involved-card,.involved-card small,.notice,.quick button{
+  overflow-wrap:anywhere;word-break:break-word}
+.data-item span,.report-cell,.report-person-field{display:block}
+.mode.sel,.org.sel,.type-card.sel{box-shadow:inset 0 0 0 2px var(--blue)}
+.mode.sel .ivy-icon,.org.sel .ivy-icon,.type-card.sel .ivy-icon{background:var(--blue);color:#fff}
+.start-arrow-btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.field input.bad{border-color:var(--danger);background:#fff8f8}
+.composer .btn,.police-compose .btn{flex:0 0 auto}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.secondary:hover{background:#e3f1fa}
+.next-hint,.start-arrow-btn .big-arrow{animation:none}
+#attendScreen .edit-form{grid-template-columns:minmax(0,1fr)}
+#attendScreen aside.panel{position:sticky;top:12px}
+#attendScreen aside.panel>.panel-body{max-height:calc(100vh - 150px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#c3d4e3 transparent}
+.panel-head{min-width:0}
+.panel-head>div{min-width:0}
+@media(max-width:900px){
+  .workspace,.police-layout{grid-template-columns:minmax(0,1fr)}
+  .mode-grid,.org-grid,.data-grid,.edit-form,.report-grid,.report-person-grid{grid-template-columns:minmax(0,1fr)}
+  #attendScreen aside.panel{position:static}
+  #attendScreen aside.panel>.panel-body{max-height:none}
+}
+.ivy-icon{width:48px;height:48px;border-radius:14px;display:inline-grid;place-items:center;background:#e7f3fc;color:#0756a0;font-size:22px;margin-bottom:10px;transition:transform .35s ease,background .35s ease}
+.ivy-icon i{display:block;line-height:1}
+.mode:hover .ivy-icon,.org:hover .ivy-icon,.type-card:not(.locked):hover .ivy-icon{transform:translateY(-4px) scale(1.06);background:#d7ecfa}
+.ivy-icon.pulse i{animation:iconFloat 2.2s ease-in-out infinite}
+@keyframes iconFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+#navConfig .bi-gear{display:inline-block;transition:transform .45s ease}
+#navConfig:hover .bi-gear{transform:rotate(80deg)}
+.type-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px}
+.type-card{padding:22px;border:1px solid var(--line);border-radius:16px;background:#fff;text-align:left;transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease}
+button.type-card:hover{transform:translateY(-2px);border-color:var(--blue)}
+.type-card.sel{border-color:var(--blue);background:#f4faff;box-shadow:inset 0 0 0 2px var(--blue)}
+.type-card b{display:block;font-size:17px;margin-bottom:6px;color:#111}
+.type-card small{color:#555;line-height:1.45}
+.type-card.locked{opacity:.72;background:#f7f8f9;cursor:not-allowed}
+.type-card.locked .ivy-icon{background:#eef1f4;color:#8a97a3}
+.service-lock{display:flex;gap:12px;align-items:center;padding:14px 16px;border:1px solid #cfe3f3;border-radius:16px;background:#f8fbfe;margin:8px 0 18px}
+.service-lock .ivy-icon{margin:0;flex:0 0 auto}
+.service-lock b{display:block;color:#111}
+.service-lock small{color:#555}
+.admin-link{margin-left:auto}
+.mode,.org{display:flex;flex-direction:column;align-items:flex-start}
+.topnav button{display:inline-flex;align-items:center;gap:6px}
+.mode,.org,.type-card{transition:border-color .2s ease,background .2s ease,transform .2s ease,box-shadow .2s ease}
+@media(max-width:700px){.type-grid{grid-template-columns:minmax(0,1fr)}}
+
+/* ===== Refinamento visual (institucional, azul/branco/cinza) ===== */
+:root{--ink:#0f1c2b;--ink-2:#3b4b5c;--ink-3:#66798c;--line:#d9e4ee;--line-2:#e8f0f7;--surface:#f6fafd;--focus:0 0 0 3px rgba(8,116,209,.28);--r-sm:10px;--r-md:14px;--r-lg:18px;--shadow-1:0 1px 2px rgba(6,59,115,.06),0 6px 16px rgba(6,59,115,.06);--shadow-2:0 2px 6px rgba(6,59,115,.08),0 18px 40px rgba(6,59,115,.10)}
+html{-webkit-text-size-adjust:100%}
+body{font-family:Inter,"Segoe UI",Arial,sans-serif;color:var(--ink);background:#e9f2f9;background-image:radial-gradient(1200px 500px at 15% -10%,#ffffff 0%,rgba(255,255,255,0) 60%),linear-gradient(180deg,#eaf4fb,#e6eff7);letter-spacing:-.005em;-webkit-font-smoothing:antialiased}
+.app{border-radius:20px;box-shadow:var(--shadow-2);border-color:#cfdce8}
+h1{font-size:28px;font-weight:800;letter-spacing:-.02em;color:var(--ink);margin-bottom:6px}
+h2,h3{letter-spacing:-.01em}
+.sub{color:var(--ink-2);max-width:78ch}
+/* Cabecalho */
+header{padding:18px 26px;background:linear-gradient(120deg,#052f5e 0%,var(--dark) 45%,var(--blue) 120%);position:relative}
+header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,#49b8ff,#0874d1 40%,rgba(8,116,209,0))}
+.brand{display:flex;align-items:center;gap:14px;font-size:22px;letter-spacing:.02em}
+.brand-emblem{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);font-size:22px;flex:0 0 auto;box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+.brand small{font-size:12px;letter-spacing:.01em;opacity:.86}
+.status{display:inline-flex;align-items:center;gap:8px;font-weight:600;background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.32);padding:8px 14px 8px 11px}
+.status::before{content:"";width:8px;height:8px;border-radius:50%;background:#49e6a5;box-shadow:0 0 0 3px rgba(73,230,165,.25);flex:0 0 auto}
+/* Navegacao */
+.topnav{padding:10px 18px;background:#fff;gap:6px}
+.topnav button{border-color:transparent;background:transparent;color:var(--ink-2);padding:10px 14px;border-radius:var(--r-sm);font-weight:600;min-height:44px;transition:background .18s ease,color .18s ease}
+.topnav button:hover{background:var(--surface);color:var(--ink)}
+.topnav button.active{background:#eaf4fd;border-color:#cfe4f6;color:var(--dark);font-weight:700}
+.topnav button .bi{font-size:16px;color:var(--blue)}
+.topnav button.active .bi{color:var(--dark)}
+.topnav .admin-link{border:1px solid var(--line);background:#fff}
+/* Guia de etapas */
+.flow-guide{background:#fff;border-color:var(--line);gap:14px;padding:12px 18px}
+.flow-step{color:var(--ink-2);font-weight:600}
+.flow-step .num{width:28px;height:28px;font-size:13px;font-weight:800;background:linear-gradient(180deg,#f2f8fd,#e3f0fb);border:1px solid #cfe4f6}
+.flow-arrow{color:#9db8cf;font-size:18px}
+/* Cartoes de escolha */
+.row.g-3{margin-bottom:18px}
+.mode,.org,.type-card{position:relative;border-radius:var(--r-lg);border:1px solid var(--line);box-shadow:var(--shadow-1);padding:22px 22px 20px;min-height:100%}
+.mode:hover,.org:hover,button.type-card:hover{box-shadow:var(--shadow-2);transform:translateY(-2px);border-color:#9fc6e8}
+.mode.sel,.org.sel,.type-card.sel{border-color:var(--blue);background:linear-gradient(180deg,#f7fbff,#eef6fd);box-shadow:inset 0 0 0 2px var(--blue),var(--shadow-1)}
+.mode::after,.org::after,button.type-card::after{content:"\F26E";font-family:"bootstrap-icons";position:absolute;top:14px;right:14px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:16px;color:#fff;background:var(--blue);opacity:0;transform:scale(.6);transition:opacity .18s ease,transform .18s ease}
+.mode.sel::after,.org.sel::after,.type-card.sel::after{opacity:1;transform:scale(1)}
+.mode b,.org b,.type-card b{font-size:18px;letter-spacing:-.01em}
+.mode small,.org small,.type-card small{color:var(--ink-2);line-height:1.5;font-size:13.5px}
+.ivy-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(180deg,#eaf4fd,#dcecfa);color:var(--blue2);font-size:24px;margin-bottom:14px;border:1px solid #cfe4f6}
+.next-hint{color:var(--dark);font-weight:700;font-size:14px}
+.notice{border-radius:var(--r-md);line-height:1.55;color:var(--ink-2)}
+.notice.warn{background:#fff9ec;border-color:#f1e0b5;color:#5a4300}
+/* Botoes */
+.btn{min-height:44px;border-radius:var(--r-sm);padding:10px 16px;font-weight:700;letter-spacing:-.005em;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:background .18s ease,box-shadow .18s ease,transform .12s ease,filter .18s ease}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:linear-gradient(180deg,#1a86e0,var(--blue));box-shadow:0 1px 0 rgba(255,255,255,.25) inset,0 6px 14px rgba(8,116,209,.22)}
+.btn.primary:hover{filter:none;background:linear-gradient(180deg,#1f8ee9,#0a6fc7);box-shadow:0 8px 18px rgba(8,116,209,.28)}
+.btn.secondary{background:#eef5fb;color:var(--dark);border:1px solid #d7e6f2}
+.btn.secondary:hover{background:#e2eff9}
+.btn.green{background:#1f9d6a;color:#fff}.btn.green:hover{background:#188a5c}
+.btn.darkbtn{background:#1d3f5f;color:#fff}.btn.darkbtn:hover{background:#163250}
+.start-arrow-btn{border-radius:14px}
+.start-arrow-btn:disabled{opacity:.45;background:#9fb9d2;box-shadow:none}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,.mode:focus-visible,.type-card:focus-visible{outline:none;box-shadow:var(--focus)}
+input:focus,textarea:focus,select:focus{outline:none;box-shadow:var(--focus);border-color:var(--blue)}
+/* Paineis */
+.panel{border-radius:var(--r-lg);box-shadow:var(--shadow-1);border-color:var(--line)}
+.panel-head{background:linear-gradient(180deg,#fbfdff,#f4f9fd);padding:14px 18px}
+.panel-head b{font-size:15px;letter-spacing:-.01em}
+.panel-head .muted{margin-top:2px}
+.mode-badge{background:#eaf4fd;color:var(--dark);border:1px solid #cfe4f6;padding:6px 10px;letter-spacing:.02em;text-transform:uppercase;font-size:10.5px}
+.panel-body{padding:16px 18px}
+.muted{color:var(--ink-3)}
+/* Conversa */
+.chatlog{background:linear-gradient(180deg,#f7fafd,#f3f8fc);border-color:var(--line-2);border-radius:var(--r-md);padding:14px;scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:#c3d4e3 transparent}
+.chatlog::-webkit-scrollbar,.police-feed::-webkit-scrollbar{width:8px}
+.chatlog::-webkit-scrollbar-thumb,.police-feed::-webkit-scrollbar-thumb{background:#c3d4e3;border-radius:8px}
+.msg{border-radius:16px;padding:12px 15px;line-height:1.5;font-size:15px;box-shadow:0 1px 1px rgba(6,59,115,.05);animation:msgIn .22s ease}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.msg.ivy{background:#fff;border:1px solid var(--line-2);color:var(--ink);border-bottom-left-radius:6px}
+.msg.user{background:linear-gradient(180deg,#1a86e0,var(--blue));border-bottom-right-radius:6px;box-shadow:0 4px 12px rgba(8,116,209,.2)}
+.msg.police{background:#fff7e3;border-color:#efd9a1}
+.msg small{font-size:11px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;opacity:.62;margin-top:6px}
+.quick{gap:8px}
+.quick button{min-height:42px;border-radius:999px;padding:9px 16px;border:1px solid #cfe1f1;background:#fff;color:var(--dark);font-weight:600;transition:background .16s ease,border-color .16s ease,transform .12s ease}
+.quick button:hover{background:#eaf4fd;border-color:#9fc6e8}
+.quick button:active{transform:translateY(1px)}
+.composer input,.police-compose input,.field input,.field select{min-height:44px;border-radius:var(--r-sm);border:1px solid #c9d9e6;background:#fff;padding:10px 12px;color:var(--ink);transition:border-color .16s ease,box-shadow .16s ease}
+.field textarea{border-radius:var(--r-sm);border:1px solid #c9d9e6;padding:10px 12px}
+.composer input::placeholder,.police-compose input::placeholder,.field input::placeholder{color:#93a6b8}
+.field label{color:var(--ink-2);font-size:11px;letter-spacing:.04em;text-transform:uppercase;font-weight:700}
+/* Camera */
+.camera-box{background:linear-gradient(180deg,#0b2033,#071b2b);border:1px solid #143753;border-radius:var(--r-lg);padding:14px}
+.camera-box>b{display:flex;align-items:center;gap:8px;font-size:14px;letter-spacing:.02em;text-transform:uppercase;color:#cfe4f6;margin-bottom:10px}
+.camera-box>b::before{content:"\F1F7";font-family:"bootstrap-icons";font-size:16px;color:#49b8ff}
+.frame{border-radius:14px;background:radial-gradient(400px 200px at 50% 40%,#173a55,#102d43);border:1px solid #1c4664}
+.frame .guide{inset:9%;border:2px dashed rgba(73,230,165,.75);border-radius:18px}
+.frame .hint{color:#b9d3e8;font-size:14px;line-height:1.5}
+#cameraStatus{display:flex;align-items:center;gap:8px;font-size:13px;color:#cfe4f6!important;min-height:20px}
+#cameraStatus:not(:empty)::before{content:"";width:8px;height:8px;border-radius:50%;background:#49b8ff;flex:0 0 auto;animation:camPulse 1.4s ease-in-out infinite}
+@keyframes camPulse{0%,100%{opacity:.4}50%{opacity:1}}
+.libras-help{background:#f4f9fd;border-color:#d7e6f2}
+.sign-log{display:grid;gap:7px;margin-top:10px;max-height:180px;overflow:auto}
+.sign-log:empty{display:none}
+.sign-item{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;padding:8px 10px;border:1px solid #1c4664;border-radius:10px;background:#0d2740;color:#d8e9f6}
+.sign-item b{display:block;font-size:13px;color:#fff}
+.sign-item small{display:block;color:#9ec4df;margin-top:2px;line-height:1.35}
+.sign-item .when{font-size:11px;color:#8fb3cc;white-space:nowrap;flex:0 0 auto}
+.sign-log{display:grid;gap:7px;margin-top:10px;max-height:180px;overflow:auto}
+.sign-log:empty{display:none}
+.sign-item{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;padding:8px 10px;border:1px solid #1c4664;border-radius:10px;background:#0d2740;color:#d8e9f6}
+.sign-item b{display:block;font-size:13px;color:#fff}
+.sign-item small{display:block;color:#9ec4df;margin-top:2px;line-height:1.35}
+.sign-item .when{font-size:11px;color:#8fb3cc;white-space:nowrap}
+/* Dados coletados */
+.data-grid{gap:10px}
+.data-item{border-radius:12px;border-color:var(--line-2);background:linear-gradient(180deg,#fff,#fafcfe);padding:11px 12px;min-height:58px;box-shadow:0 1px 1px rgba(6,59,115,.04)}
+.data-item b{color:var(--ink-3);letter-spacing:.05em;text-transform:uppercase;font-size:9.5px;font-weight:700;margin-bottom:5px}
+.data-item span{font-weight:600;color:var(--ink);font-size:13px}
+.data-item span.missing{color:#8a5a00!important;font-weight:500!important;font-size:12px;white-space:nowrap}
+.data-item span.missing::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:#e0a72d;margin-right:6px;vertical-align:middle}
+.section-title{color:var(--ink-3);font-size:11.5px;letter-spacing:.08em;font-weight:700}
+.involved-card{border-radius:12px;box-shadow:0 1px 1px rgba(6,59,115,.04)}
+.mini-btn{min-height:32px;border-radius:8px}
+/* Painel do policial */
+.police-feed{border-radius:var(--r-md);background:linear-gradient(180deg,#f7fafd,#f3f8fc);border-color:var(--line-2)}
+.admin-gate{position:fixed;inset:0;z-index:80;display:grid;place-items:center;padding:22px;background:rgba(6,59,115,.45)}
+.admin-gate[hidden]{display:none!important}
+.admin-gate-card{max-width:420px;width:100%}
+.admin-gate-error{display:none;margin-top:10px}
+.admin-gate-error.show{display:block}
+.help-banner{display:none;margin:0 0 16px}
+.help-banner.show{display:block}
+.data-item.priority{border-color:#ebcaca;background:#fff6f6}
+.data-item.priority span{color:var(--danger)}
+#navPolice.alert-help{color:var(--danger);border-color:#ebcaca;background:#fff6f6}
+#navPolice.alert-help .bi{color:var(--danger)}
+/* Relatorio */
+.report{border-radius:12px;overflow:hidden;border-color:#c6d2dc;box-shadow:var(--shadow-1)}
+.report-header{background:linear-gradient(180deg,#fff,#f6f9fc);border-bottom:2px solid var(--dark);padding:20px}
+.report-header h2{font-size:17px;letter-spacing:.04em;text-transform:uppercase;color:var(--dark);font-weight:800}
+.report-header small{color:var(--ink-3);letter-spacing:.08em;font-size:10.5px}
+.report-title{background:#e9eff4;color:var(--ink);letter-spacing:.08em;font-size:12px;border-top:1px solid #c6d2dc;border-bottom:1px solid #c6d2dc}
+.report-cell{border-color:#dbe4ec;font-size:12.5px;color:var(--ink);padding:10px 12px}
+.report-cell b{color:var(--ink-3);letter-spacing:.06em;font-size:9px}
+.report-person-card{border-radius:8px}
+.prototype{background:#fff5f5;border-top:1px solid #f0d3d3;letter-spacing:.04em}
+.share-panel{border-radius:var(--r-lg);background:#fff;box-shadow:var(--shadow-1);padding:20px}
+.share-panel h3{font-size:18px}
+.share-panel p{color:var(--ink-2)}
+/* Configuracao */
+.type-card.locked{opacity:.8;background:#f4f6f8;box-shadow:none}
+.type-card.locked:hover{transform:none}
+/* Movimento reduzido e toque */
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(pointer:coarse){.btn,.quick button,.topnav button{min-height:48px}.mini-btn{min-height:40px}}
+@media(max-width:600px){header{padding:14px 16px;flex-wrap:wrap;gap:10px}.brand{font-size:19px}.brand small{white-space:nowrap}.brand-emblem{width:40px;height:40px;font-size:19px}.status{max-width:100%;font-size:11.5px}body.mode-libras #attendScreen #chatLog{height:240px}.topnav{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}.topnav::-webkit-scrollbar{display:none}.topnav button{white-space:nowrap}h1{font-size:23px}.msg{max-width:92%}}
+@media print{.app{box-shadow:none}.report{box-shadow:none;border-radius:0}}
+</style>
+</head>
+<body>
+<main class="app">
+<header><div class="brand"><span class="brand-emblem" aria-hidden="true"><i class="bi bi-shield-check"></i></span><span>IVY LIBRAS<small>Atendimento da Polícia Civil</small></span></div><div class="status" id="liveStatus">Polícia Civil</div></header>
+<nav class="topnav">
+  <button id="navStart" class="active" onclick="go('startScreen')"><i class="bi bi-house"></i> Início</button>
+  <button id="navAttend" onclick="go('attendScreen')"><i class="bi bi-chat-left-text"></i> Atendimento</button>
+  <button id="navPolice" onclick="go('policeScreen')"><i class="bi bi-shield-lock"></i> Área policial</button>
+  <button id="navReport" onclick="go('reportScreen')"><i class="bi bi-file-earmark-text"></i> Relatório</button>
+  <button id="navConfig" class="admin-link" onclick="go('configScreen')"><i class="bi bi-gear"></i> Configuração</button>
+</nav>
+
+<div id="adminGate" class="admin-gate" hidden>
+  <div class="admin-gate-card panel">
+    <div class="panel-head"><b>Área policial</b><span class="mode-badge">Acesso restrito</span></div>
+    <div class="panel-body">
+      <p class="sub" style="margin-top:0">A pessoa em atendimento não acessa este painel. Informe a senha de verificação do policial.</p>
+      <div class="field"><label>Senha</label><input id="adminGatePass" type="password" maxlength="20" autocomplete="off" placeholder="Senha de verificação" onkeydown="if(event.key==='Enter')unlockPoliceGate()"></div>
+      <div id="adminGateError" class="notice warn admin-gate-error">Senha incorreta.</div>
+      <div class="actions"><button class="btn secondary" type="button" onclick="closePoliceGate()">Cancelar</button><button class="btn primary" type="button" onclick="unlockPoliceGate()">Entrar</button></div>
+    </div>
+  </div>
+</div>
+
+<section id="startScreen" class="screen active">
+  <h1>Tipo de atendimento</h1>
+  <p class="sub">Escolha como a pessoa deseja se comunicar. O órgão é a Polícia Civil, definido na configuração do administrador.</p>
+  <div class="flow-guide" aria-label="Etapas do atendimento">
+    <div class="flow-step"><span class="num">1</span> Tipo</div><span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="num">2</span> Atendimento</div><span class="flow-arrow">→</span>
+    <div class="flow-step"><span class="num">3</span> Relatório</div>
+  </div>
+  <div class="row g-3 justify-content-center">
+    <div class="col-12 col-md-6"><button class="mode w-100 h-100" data-mode="Libras" onclick="selectMode('Libras',this)"><span class="ivy-icon pulse"><i class="bi bi-camera-video"></i></span><b>Atendimento por câmera</b><small>Vídeo do dispositivo, sinais treinados e botões para completar o que a câmera ainda não reconhece.</small></button></div>
+    <div class="col-12 col-md-6"><button class="mode w-100 h-100" data-mode="Assistido" onclick="selectMode('Assistido',this)"><span class="ivy-icon"><i class="bi bi-universal-access"></i></span><b>Atendimento assistido</b><small>Conversa guiada e formulário. Sem câmera. A Ivy responde com base no que foi dito.</small></button></div>
+  </div>
+  <div id="modeNextHint" class="next-hint">Tipo escolhido. Pode começar o atendimento.</div>
+  <div class="notice warn">Protótipo acadêmico. A Ivy organiza a conversa. O registro oficial continua com o profissional da Polícia Civil.</div>
+  <div class="actions"><span></span><button id="startBtn" class="btn primary start-arrow-btn" disabled onclick="startAttendance()">Começar atendimento <i class="bi bi-arrow-right"></i></button></div>
+</section>
+
+<section id="configScreen" class="screen">
+  <h1>Configuração do administrador</h1>
+  <p class="sub">O órgão do totem é definido aqui e não entra como escolha na página inicial. Nesta versão o órgão é a Polícia Civil.</p>
+  <div class="type-grid">
+    <button type="button" class="type-card sel" id="orgCivil" onclick="selectOrgAdmin(this)">
+      <span class="ivy-icon pulse"><i class="bi bi-shield-fill-check"></i></span>
+      <b>Polícia Civil</b>
+      <small>Órgão em uso. Todo atendimento iniciado nesta tela segue para a Polícia Civil.</small>
+    </button>
+    <div class="type-card locked" aria-disabled="true">
+      <span class="ivy-icon"><i class="bi bi-lock"></i></span>
+      <b>Outros órgãos ainda não estão disponíveis</b>
+      <small>Polícia Militar e demais órgãos permanecem bloqueados nesta versão.</small>
+    </div>
+  </div>
+</section>
+
+<section id="attendScreen" class="screen">
+  <div class="workspace">
+    <div class="panel">
+      <div class="panel-head"><div><b>Conversa com a Ivy</b><div class="muted">A Ivy faz as perguntas. Responda pelos botões, pelo texto ou pelos sinais.</div></div><span id="modeBadge" class="mode-badge">Modo não selecionado</span><button class="btn secondary" type="button" onclick="finishAttendance()">Finalizar atendimento</button></div>
+      <div class="panel-body">
+        <div id="chatLog" class="chatlog" aria-live="polite"></div>
+        <div id="quickReplies" class="quick"></div>
+        <div class="composer"><input id="chatInput" maxlength="500" autocomplete="off" placeholder="Digite uma mensagem..." onkeydown="if(event.key==='Enter')sendUserMessage()"><button class="btn primary" onclick="sendUserMessage()">Enviar</button></div>
+        <div id="voiceTools" class="voice-tools" style="display:none"><button id="micBtn" onclick="toggleMic()">Responder por voz</button><button onclick="repeatLastIvy()">Ouvir última pergunta</button><button id="voiceToggle" onclick="toggleVoice()">Voz da Ivy: ligada</button></div>
+        <div id="voiceStatus" class="muted"></div>
+
+        <div id="cameraBox" class="camera-box">
+          <b>Comunicação em Libras</b>
+          <div class="frame"><video id="cameraVideo" autoplay playsinline muted></video><div id="cameraHint" class="hint">Clique em Ligar câmera. O vídeo ocupa esta área em 16:9 e o sinal confirmado entra na conversa.</div><div class="guide"></div></div>
+          <div class="cam-actions"><button class="btn green" onclick="startCamera()">Ligar câmera</button><button id="recordBtn" class="btn darkbtn" onclick="toggleRecording()">Gravar sinalização</button><button class="btn darkbtn" onclick="stopCamera()">Desligar câmera</button><button class="btn secondary" type="button" onclick="downloadReportPdf()">Gerar PDF</button><button class="btn secondary" type="button" onclick="finishAttendance()">Finalizar atendimento</button></div>
+          <div id="cameraStatus" class="muted" style="color:#d8e9f6;margin-top:8px"></div>
+          <div id="signLogLive" class="sign-log" aria-live="polite"></div>
+          <video id="recordPreview" class="record-preview" controls></video>
+        </div>
+        <div id="librasHelp" class="notice libras-help"><b>Câmera:</b> os sinais treinados são bom dia, boa noite, precisa de ajuda e te amo. “Preciso de ajuda” vai com prioridade ao painel policial (senha 123). Nome e demais dados ditos no chat preenchem o formulário. O VLibras traduz as perguntas da Ivy.</div>
+      </div>
+    </div>
+
+    <aside class="panel">
+      <div class="panel-head"><b>Dados coletados</b><span class="mode-badge">Ao vivo</span><button class="mini-btn" type="button" onclick="downloadReportPdf()">Gerar PDF</button><button class="mini-btn" type="button" onclick="finishAttendance()">Finalizar</button></div>
+      <div class="panel-body">
+        <div id="collectedGrid" class="data-grid"></div>
+        <div class="section-title">Editar / completar manualmente</div>
+        <div class="edit-form">
+          <div class="field"><label>Nome</label><input data-field="name" maxlength="80" oninput="manualUpdate(this)"></div>
+          <div class="field"><label>Participação</label><select data-field="role" onchange="manualUpdate(this)"><option value=""></option><option>Vítima</option><option>Testemunha</option><option>Solicitante / comunicante</option><option>Autor / suspeito</option></select></div>
+          <div class="field"><label>CPF</label><input data-field="cpf" maxlength="14" inputmode="numeric" oninput="manualUpdate(this)" placeholder="000.000.000-00"></div>
+          <div class="field"><label>Data de nascimento</label><input data-field="birthDate" maxlength="10" inputmode="numeric" oninput="manualUpdate(this)" placeholder="dd/mm/aaaa"></div>
+          <div class="field"><label>Naturalidade</label><input data-field="naturalidade" maxlength="60" oninput="manualUpdate(this)"></div>
+          <div class="field"><label>Nacionalidade</label><input data-field="nacionalidade" maxlength="40" oninput="manualUpdate(this)" value="Brasileira"></div>
+          <div class="field"><label>Estado civil</label><select data-field="estadoCivil" onchange="manualUpdate(this)"><option value=""></option><option>Solteiro(a)</option><option>Casado(a)</option><option>União estável</option><option>Divorciado(a)</option><option>Separado(a)</option><option>Viúvo(a)</option><option>Outro</option></select></div>
+          <div class="field"><label>Profissão</label><input data-field="profissao" maxlength="50" oninput="manualUpdate(this)"></div>
+          <div class="field"><label>Telefone</label><input data-field="telefone" maxlength="15" inputmode="tel" oninput="manualUpdate(this)" placeholder="(00) 00000-0000"></div>
+          <div class="field full"><label>Endereço da pessoa</label><input data-field="personAddress" maxlength="140" oninput="manualUpdate(this)"></div>
+          <div class="field full"><label>Relato</label><textarea data-field="story" maxlength="700" oninput="manualUpdate(this)"></textarea></div>
+        </div>
+
+        <div class="involved-section">
+          <div class="involved-toolbar">
+            <div>
+              <div class="section-title" style="margin:0 0 3px">Pessoas envolvidas adicionais</div>
+              <div style="font-size:12px;color:#666">Cadastre vítima, testemunha, solicitante/comunicante ou autor/suspeito relacionado ao fato. <b>Sem limite fixo de pessoas.</b></div>
+              <div id="involvedCountLive" style="font-size:12px;color:#0756a0;font-weight:700;margin-top:3px">0 envolvidos cadastrados</div>
+            </div>
+            <button class="btn secondary" type="button" onclick="openInvolvedForm()">＋ Adicionar envolvido</button>
+          </div>
+          <div id="involvedList" class="involved-list"></div>
+
+          <div id="involvedFormBox" class="involved-form-box">
+            <div class="section-title" id="involvedFormTitle" style="margin-top:0">Novo envolvido</div>
+            <div class="edit-form">
+              <div class="field"><label>Nome</label><input id="invName" maxlength="80" placeholder="Nome completo"></div>
+              <div class="field"><label>Participação</label><select id="invRole"><option value="">Selecione</option><option>Vítima</option><option>Testemunha</option><option>Solicitante / comunicante</option><option>Autor / suspeito</option><option>Outra pessoa envolvida</option></select></div>
+              <div class="field"><label>CPF</label><input id="invCpf" maxlength="14" inputmode="numeric" placeholder="000.000.000-00" oninput="this.value=maskCpf(this.value)"></div>
+              <div class="field"><label>Data de nascimento</label><input id="invBirth" maxlength="10" inputmode="numeric" placeholder="dd/mm/aaaa" oninput="this.value=maskDate(this.value)"></div>
+              <div class="field"><label>Naturalidade</label><input id="invNaturalidade" maxlength="60" placeholder="Cidade / UF"></div>
+              <div class="field"><label>Estado civil</label><select id="invCivil"><option value=""></option><option>Solteiro(a)</option><option>Casado(a)</option><option>União estável</option><option>Divorciado(a)</option><option>Separado(a)</option><option>Viúvo(a)</option><option>Outro</option></select></div>
+              <div class="field"><label>Telefone</label><input id="invPhone" maxlength="15" inputmode="tel" placeholder="(00) 00000-0000" oninput="this.value=maskPhone(this.value)"></div>
+              <div class="field"><label>Profissão</label><input id="invJob" maxlength="50"></div>
+              <div class="field full"><label>Endereço</label><input id="invAddress" maxlength="140"></div>
+              <div class="field full"><label>Observações / relação com o fato</label><textarea id="invNotes" maxlength="280" placeholder="Informações adicionais sobre esta pessoa"></textarea></div>
+            </div>
+            <div class="involved-form-actions">
+              <button class="btn secondary" type="button" onclick="cancelInvolvedForm()">Cancelar</button>
+              <button class="btn primary" type="button" onclick="saveInvolvedPerson()">Salvar envolvido</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section id="policeScreen" class="screen">
+  <h1>Painel do policial</h1>
+  <p class="sub">Acompanha a conversa sem substituir a condução profissional do atendimento. A pessoa atendida não entra nesta tela.</p>
+  <div id="policeHelpBanner" class="notice warn help-banner"><b>Prioridade — precisa de ajuda.</b> Encaminhe atendimento humano. Os dados já coletados estão no resumo ao lado e no relatório.</div>
+  <div class="police-layout">
+    <div class="panel"><div class="panel-head"><b>Conversa em tempo real</b><span id="policeRole" class="mode-badge">Participação: —</span></div><div class="panel-body"><div id="policeFeed" class="police-feed"></div><div class="police-compose"><input id="policeInput" maxlength="300" placeholder="Digite uma pergunta para a pessoa..." onkeydown="if(event.key==='Enter')sendPoliceMessage()"><button class="btn primary" onclick="sendPoliceMessage()">Enviar</button></div><div class="muted" style="margin-top:8px">A pergunta do policial aparece na conversa da pessoa atendida e pode ser traduzida pelo VLibras. A resposta volta para este painel.</div></div></div>
+    <div class="panel"><div class="panel-head"><b>Resumo estruturado</b></div><div class="panel-body"><div id="policeSummary" class="data-grid"></div><div class="actions"><button class="btn secondary" onclick="go('attendScreen')">← Voltar ao atendimento</button><button class="btn secondary" type="button" onclick="finishAttendance()">Finalizar atendimento</button><button class="btn primary" onclick="go('reportScreen')">Ver relatório →</button></div></div></div>
+  </div>
+</section>
+
+<section id="reportScreen" class="screen">
+  <div class="no-print">
+    <h1>Relatório da ocorrência</h1>
+    <div class="report-bar">
+      <p class="sub" id="reportBarHint" style="margin:0">Gere o PDF deste atendimento ou inicie outro com o histórico zerado.</p>
+      <div class="actions">
+        <button class="btn primary" type="button" onclick="downloadReportPdf()">Gerar PDF</button>
+        <button class="btn secondary" type="button" onclick="finalizeAndPrint()">Imprimir</button>
+        <button class="btn darkbtn" type="button" onclick="startNewAttendance()">Novo atendimento</button>
+      </div>
+      <div id="reportBarStatus" class="share-status">O PDF baixa neste computador. Novo atendimento apaga conversa, dados e relatório da tela.</div>
+    </div>
+  </div>
+  <div class="report">
+    <div class="report-header"><h2>IVY LIBRAS — Atendimento policial</h2><div id="rOrg">Órgão: não informado</div><small>IVY LIBRAS — PROTÓTIPO ACADÊMICO</small></div>
+    <div class="report-title">DADOS DO ATENDIMENTO</div><div class="report-grid">
+      <div class="report-cell"><b>MODALIDADE</b><span id="rMode"></span></div><div class="report-cell"><b>PARTICIPAÇÃO</b><span id="rRole"></span></div>
+      <div class="report-cell"><b>INÍCIO DO ATENDIMENTO</b><span id="rStart"></span></div><div class="report-cell"><b>FINALIZAÇÃO</b><span id="rFinish"></span></div>
+      <div class="report-cell"><b>ENVOLVIDOS CADASTRADOS</b><span id="rInvolvedCount"></span></div><div class="report-cell"><b>NOME</b><span id="rName"></span></div>
+      <div class="report-cell"><b>CPF</b><span id="rCpf"></span></div><div class="report-cell"><b>NASCIMENTO</b><span id="rBirth"></span></div>
+      <div class="report-cell"><b>NATURALIDADE / NACIONALIDADE</b><span id="rNatural"></span></div><div class="report-cell"><b>ESTADO CIVIL</b><span id="rCivil"></span></div>
+      <div class="report-cell"><b>PROFISSÃO</b><span id="rJob"></span></div><div class="report-cell"><b>TELEFONE</b><span id="rPhone"></span></div>
+      <div class="report-cell full"><b>ENDEREÇO DA PESSOA</b><span id="rPersonAddress"></span></div>
+    </div>
+    <div class="report-title">DADOS DO FATO</div><div class="report-grid">
+      <div class="report-cell"><b>MOTIVO INFORMADO</b><span id="rReason"></span></div><div class="report-cell"><b>SEGURANÇA ATUAL</b><span id="rSafe"></span></div>
+      <div class="report-cell full"><b>PRECISA DE AJUDA</b><span id="rHelp"></span></div>
+      <div class="report-cell"><b>LOCAL DO FATO</b><span id="rPlace"></span></div><div class="report-cell"><b>DATA/HORÁRIO INFORMADO</b><span id="rWhen"></span></div>
+      <div class="report-cell full"><b>PESSOAS MENCIONADAS NO RELATO</b><span id="rPeople"></span></div><div class="report-cell full"><b>TESTEMUNHAS INFORMADAS</b><span id="rWitness"></span></div>
+      <div class="report-cell full"><b>PROVAS / DOCUMENTOS / OUTROS ELEMENTOS</b><span id="rEvidence"></span></div>
+      <div class="report-cell full"><b>DETALHES ESPECÍFICOS</b><span id="rDetails"></span></div>
+    </div>
+    <div class="report-title">PESSOAS ENVOLVIDAS CADASTRADAS</div>
+    <div id="rInvolvedPersons" class="report-people-block"></div>
+    <div class="report-title">SINAIS RECONHECIDOS PELA CÂMERA</div>
+    <div id="rSignLog" class="report-people-block"></div>
+    <div class="report-title">NARRATIVA</div><div class="report-cell full"><span id="rStory"></span></div>
+    <div class="prototype">PROTÓTIPO — NÃO É DOCUMENTO POLICIAL OFICIAL E NÃO POSSUI VALIDADE DE REGISTRO.</div>
+  </div>
+  <div class="share-panel no-print">
+    <h3>Compartilhar o relato</h3>
+    <p>O atendimento já pode ser encerrado nesta tela. Gere o PDF acima, compartilhe ou comece outro atendimento com o histórico zerado.</p>
+    <div class="share-actions">
+      <button class="btn secondary" onclick="go('attendScreen')">← Voltar à conversa</button>
+      <button class="btn primary" onclick="downloadReportPdf()">Gerar PDF</button>
+      <button class="btn primary" onclick="shareReportPdf()">Compartilhar PDF</button>
+      <button class="btn secondary" onclick="emailReport()">E-mail</button>
+      <button class="btn secondary" onclick="whatsappReport()">WhatsApp</button>
+      <button class="btn darkbtn" onclick="startNewAttendance()">Novo atendimento</button>
+    </div>
+    <div id="shareStatus" class="share-status">O PDF contém os dados coletados. Novo atendimento apaga o histórico da tela; arquivos já baixados permanecem no computador.</div>
+  </div>
+</section>
+</main>
+
+<div vw class="enabled"><div vw-access-button class="active"></div><div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div></div>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+<script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+<script>
+// ==========================================================
+// IVY LIBRA — ÚNICO CONTROLADOR DE ESTADO
+// ==========================================================
+const state={
+  mode:'',org:'Polícia Civil',serviceType:'policial',started:false,step:'start',voiceEnabled:true,lastIvy:'',
+  role:'',safe:'',name:'',cpf:'',birthDate:'',naturalidade:'',nacionalidade:'Brasileira',estadoCivil:'',profissao:'',telefone:'',personAddress:'',
+  story:'',reason:'',place:'',when:'',people:'',witnesses:'',evidence:'',needsHelp:'',details:[],confirmed:false,
+  categoryQueue:[],categoryIndex:0,firstMessageHandled:false,
+  involvedPersons:[],involvedEditIndex:-1,
+  attendanceStartedAt:'',attendanceFinishedAt:'',
+  signLog:[],
+  helpPriority:false,helpAlerted:false,helpAlertAt:''
+};
+
+const QUESTION_LIBRARY={
+  role:['Para começarmos, você está neste atendimento como vítima, testemunha, solicitante/comunicante ou autor/suspeito?','Qual é a sua participação neste atendimento: vítima, testemunha, solicitante/comunicante ou autor/suspeito?'],
+  safe:['Antes de continuarmos, você está em segurança neste momento?','Você está em um local seguro agora?'],
+  story:['Agora me conte com suas palavras o que aconteceu.','Pode me explicar o que aconteceu? Conte do seu jeito; eu vou fazer perguntas para completar o atendimento.'],
+  reason:['Qual é o principal motivo desta ocorrência?','Qual opção melhor descreve o ocorrido: violência doméstica, roubo, furto, ameaça, injúria, agressão/lesão, fraude, dano, perda/extravio ou outro?'],
+  place:['Onde isso aconteceu? Informe endereço, bairro ou ponto de referência.','Você consegue me dizer o local do fato?'],
+  when:['Quando isso aconteceu? Informe a data e o horário exatos ou aproximados.','Você lembra de que dia e aproximadamente que horas aconteceu?'],
+  people:['Havia outra pessoa diretamente envolvida? Diga o nome, se souber, ou descreva essa pessoa.','Quem mais estava diretamente envolvido no fato?'],
+  witnesses:['Alguém presenciou o que aconteceu?','Havia alguma testemunha? Se sim, informe o que souber sobre ela.'],
+  evidence:['Existe alguma foto, vídeo, mensagem, documento, objeto ou outra prova que possa ajudar no atendimento?','Você possui alguma prova ou registro relacionado ao ocorrido?'],
+  name:['Agora preciso completar sua identificação. Qual é o seu nome completo?'],
+  cpf:['Qual é o seu CPF? Se não souber ou não quiser informar agora, diga “não sei”.'],
+  birthDate:['Qual é a sua data de nascimento?'],
+  naturalidade:['Qual é a sua naturalidade? Informe a cidade e o estado onde nasceu.'],
+  estadoCivil:['Qual é o seu estado civil? Por exemplo: solteiro(a), casado(a), união estável, divorciado(a) ou viúvo(a).'],
+  profissao:['Qual é a sua profissão ou ocupação?'],
+  telefone:['Qual telefone pode ser usado para contato?'],
+  personAddress:['Qual é o seu endereço atual?'],
+  confirm:['Vou mostrar um resumo do que foi coletado. As informações estão corretas?']
+};
+const categoryQuestions={
+  'Roubo':[
+    {key:'rouboObjeto',q:'O que foi levado? Informe o objeto ou bem e, se souber, características como marca, modelo ou cor.'},
+    {key:'rouboViolencia',q:'Houve ameaça, violência física ou uso de alguma arma? Conte o que ocorreu.'},
+    {key:'rouboDescricao',q:'Você consegue descrever a pessoa envolvida, roupa, veículo ou alguma característica que se lembre?'}
+  ],
+  'Furto':[
+    {key:'furtoObjeto',q:'O que foi furtado? Informe o objeto ou bem e as características que lembrar.'},
+    {key:'furtoMomento',q:'Quando percebeu que o objeto havia sido levado?'}
+  ],
+  'Violência doméstica / familiar':[
+    {key:'vdVinculo',q:'Qual é ou era a sua relação com a outra pessoa? Por exemplo: cônjuge, ex-companheiro(a), namorado(a) ou familiar.'},
+    {key:'vdTipo',q:'Houve agressão, ameaça, ofensa, perseguição, dano ou outra forma de violência? Conte o que aconteceu.'},
+    {key:'vdImediato',q:'Existe alguma necessidade imediata de proteção ou atendimento médico neste momento?'}
+  ],
+  'Ameaça':[
+    {key:'ameacaForma',q:'Como a ameaça foi feita? Foi pessoalmente, por mensagem, ligação ou outro meio?'},
+    {key:'ameacaConteudo',q:'Você consegue informar, com suas palavras, o que foi dito ou feito?'}
+  ],
+  'Injúria':[
+    {key:'injuriaForma',q:'A ofensa ocorreu pessoalmente, por mensagem, rede social ou outro meio?'},
+    {key:'injuriaConteudo',q:'Conte, com suas palavras, quais foram as ofensas ou em que contexto aconteceram.'}
+  ],
+  'Agressão / lesão corporal':[
+    {key:'lesaoComo',q:'Como ocorreu a agressão e em qual parte do corpo você foi atingido(a)?'},
+    {key:'lesaoMedico',q:'Você precisou ou precisa de atendimento médico?'}
+  ],
+  'Estelionato / fraude':[
+    {key:'fraudeMeio',q:'Como o contato ou pagamento aconteceu? Por exemplo: PIX, boleto, cartão, ligação, site ou aplicativo.'},
+    {key:'fraudeValor',q:'Houve perda de dinheiro ou bem? Informe o valor aproximado, se souber.'}
+  ],
+  'Dano':[
+    {key:'danoBem',q:'Qual bem foi danificado e como o dano ocorreu?'}
+  ],
+  'Perda / extravio':[
+    {key:'perdaItem',q:'O que foi perdido ou extraviado? Informe os dados do documento ou objeto, se souber.'}
+  ],
+  'Outro':[
+    {key:'outroDetalhe',q:'Explique um pouco mais para que o policial consiga compreender a situação.'}
+  ]
+};
+const qIndex={};
+function questionList(key){return QUESTION_LIBRARY[key]||['Pode continuar.']}
+function peekQuestion(key){const arr=questionList(key);return arr[(qIndex[key]||0)%arr.length]}
+function pickQuestion(key){const q=peekQuestion(key);qIndex[key]=(qIndex[key]||0)+1;return q}
+
+function go(id){
+  if(id==='policeScreen'&&!isPoliceUnlocked()){
+    pendingPoliceScreen=true;
+    openPoliceGate();
+    return;
+  }
+  document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.topnav button').forEach(x=>x.classList.remove('active'));
+  const nav={startScreen:'navStart',attendScreen:'navAttend',policeScreen:'navPolice',reportScreen:'navReport',configScreen:'navConfig'}[id];
+  if(nav)document.getElementById(nav).classList.add('active');
+  if(id==='reportScreen')renderReport();
+  if(id==='policeScreen')renderPoliceSummary();
+  ['chatLog','policeFeed'].forEach(k=>{const el=document.getElementById(k);if(el)el.scrollTop=el.scrollHeight});
+  window.scrollTo(0,0);
+}
+let pendingPoliceScreen=false;
+function isPoliceUnlocked(){return sessionStorage.getItem('ivy_police_ok')==='1'}
+function openPoliceGate(){
+  const gate=document.getElementById('adminGate');
+  const err=document.getElementById('adminGateError');
+  const pass=document.getElementById('adminGatePass');
+  if(err)err.classList.remove('show');
+  if(gate)gate.hidden=false;
+  if(pass){pass.value='';setTimeout(()=>pass.focus(),50)}
+}
+function closePoliceGate(){
+  pendingPoliceScreen=false;
+  const gate=document.getElementById('adminGate');
+  if(gate)gate.hidden=true;
+}
+function unlockPoliceGate(){
+  const pass=document.getElementById('adminGatePass');
+  const err=document.getElementById('adminGateError');
+  if((pass&&pass.value)==='123'){
+    sessionStorage.setItem('ivy_police_ok','1');
+    if(err)err.classList.remove('show');
+    const gate=document.getElementById('adminGate');
+    if(gate)gate.hidden=true;
+    const goPolice=pendingPoliceScreen;
+    pendingPoliceScreen=false;
+    if(goPolice)go('policeScreen');
+    return;
+  }
+  if(err)err.classList.add('show');
+  if(pass){pass.value='';pass.focus()}
+}
+function selectOrgAdmin(btn){state.org='Polícia Civil';state.serviceType='policial';localStorage.setItem('ivy_org','Polícia Civil');document.querySelectorAll('#configScreen .type-card').forEach(x=>x.classList.remove('sel'));if(btn)btn.classList.add('sel');setLiveStatus('Polícia Civil');renderAll()}
+function selectMode(mode,btn){if(mode!=='Libras'&&mode!=='Assistido')return;state.mode=mode;document.querySelectorAll('.mode').forEach(x=>x.classList.remove('sel'));if(btn)btn.classList.add('sel');const start=document.getElementById('startBtn');if(start)start.disabled=false;applyModeUI();const h=document.getElementById('modeNextHint');if(h)h.classList.add('show')}
+function setLiveStatus(text){const el=document.getElementById('liveStatus');if(el)el.textContent=text}
+function startAttendance(){state.org='Polícia Civil';if(state.mode!=='Libras'&&state.mode!=='Assistido'){alert('Escolha o atendimento por câmera ou o assistido.');return}state.started=true;if(!state.attendanceStartedAt)state.attendanceStartedAt=new Date().toISOString();applyModeUI();go('attendScreen');renderAll();if(!state.firstMessageHandled){state.firstMessageHandled=true;state.step='role';ivySay(timeGreeting()+'! Eu sou a Ivy, do IVY LIBRAS. Vou organizar as informações para a '+state.org+'. '+QUESTION_LIBRARY.role[0],roleQuick())}setLiveStatus(modeLabel()+' · '+state.org)}
+function wantsFinish(low){return /^(finalizar|encerrar|terminar)(\s+(o|este))?\s*atendimento\b/.test(low)||low==='finalizar'||low==='encerrar'||low==='terminar'}
+function finishAttendance(opts={}){
+  const silent=!!opts.silent;
+  if(!state.started){if(!silent)alert('Nenhum atendimento em andamento.');return}
+  if(!state.confirmed&&!silent&&!confirm('Finalizar este atendimento com os dados coletados até agora? Em seguida você pode gerar o PDF. O histórico só é apagado em Novo atendimento.'))return;
+  ensureFinishedTimestamp();
+  state.confirmed=true;
+  state.step='complete';
+  stopCamera();
+  renderAll();
+  setLiveStatus('Finalizado · '+modeLabel());
+  ivySay('Atendimento finalizado. Na aba Relatório, no topo, estão Gerar PDF e Novo atendimento.',['Ver relatório','Novo atendimento']);
+  go('reportScreen');
+  const hint=document.getElementById('reportBarHint');
+  if(hint)hint.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function startNewAttendance(){
+  if(!confirm('Isso apaga o histórico desta tela (conversa, dados e relatório) e volta ao início. O PDF já baixado no computador não é apagado. Continuar?'))return;
+  resetAttendance(true);
+}
+function modeLabel(){return state.mode==='Libras'?'Câmera':state.mode==='Assistido'?'Assistido':'Modo não selecionado'}
+function reportModeLabel(){return state.mode==='Libras'?'Atendimento por câmera (Libras)':state.mode==='Assistido'?'Atendimento assistido':'Não informado'}
+const INITIAL_STATE=JSON.parse(JSON.stringify(state));
+function resetAttendance(force){
+  if(!force && state.started && !confirm('Encerrar este atendimento e apagar os dados da tela para começar outro?'))return;
+  stopCamera();
+  Object.keys(INITIAL_STATE).forEach(k=>{state[k]=JSON.parse(JSON.stringify(INITIAL_STATE[k]))});
+  state.org='Polícia Civil';
+  stepHistory.length=0;retry={};Object.keys(qIndex).forEach(k=>delete qIndex[k]);
+  lastSubmittedSign='';lastSign='';signStreak=0;signReleased=true;
+  ['chatLog','policeFeed','quickReplies','signLogLive'].forEach(id=>{const el=document.getElementById(id);if(el)el.innerHTML=''});
+  const rp=document.getElementById('recordPreview');if(rp){rp.removeAttribute('src');rp.style.display='none'}
+  const ci=document.getElementById('chatInput');if(ci)ci.value='';
+  document.querySelectorAll('.mode').forEach(x=>x.classList.remove('sel'));
+  const start=document.getElementById('startBtn');if(start)start.disabled=true;
+  const h=document.getElementById('modeNextHint');if(h)h.classList.remove('show');
+  if(typeof cancelInvolvedForm==='function')cancelInvolvedForm();
+  if(typeof renderInvolvedPersons==='function')renderInvolvedPersons();
+  document.querySelectorAll('[data-field]').forEach(el=>{if(el.dataset.field==='nacionalidade')el.value='Brasileira';else el.value='';el.classList.remove('bad')});
+  applyModeUI();
+  renderReport();
+  renderHelpUi();
+  setShareStatus('Histórico da tela apagado. Escolha o tipo de atendimento para começar outro.','ok');
+  setLiveStatus('Polícia Civil');
+  go('startScreen');
+}
+function applyModeUI(){document.getElementById('modeBadge').textContent=modeLabel();const normal=false,libras=state.mode==='Libras';document.body.classList.toggle('mode-libras',libras);document.body.classList.toggle('mode-normal',normal);document.getElementById('voiceTools').style.display=normal?'flex':'none';document.getElementById('cameraBox').classList.toggle('show',libras);document.getElementById('librasHelp').classList.toggle('show',libras);if(!normal){stopSpeaking();stopMic()}if(!libras)stopCamera();renderAll()}
+function addSystemHint(text){const d=document.createElement('div');d.className='notice';d.textContent=text;document.getElementById('chatLog').appendChild(d)}
+function addMessage(who,text,meta=''){const log=document.getElementById('chatLog');const d=document.createElement('div');d.className='msg '+who;d.textContent=text;if(meta){const s=document.createElement('small');s.textContent=meta;d.appendChild(s)}log.appendChild(d);log.scrollTop=log.scrollHeight;const pf=document.getElementById('policeFeed');const p=d.cloneNode(true);p.className='msg '+(who==='user'?'user':who==='police'?'police':'ivy');pf.appendChild(p);pf.scrollTop=pf.scrollHeight}
+function ivySay(text,quick=[]){state.lastIvy=text;addMessage('ivy',text,'Ivy');setQuick(quick);if(state.mode==='Normal'&&state.voiceEnabled)speak(text)}
+function speak(text){if(state.mode!=='Normal'||!state.voiceEnabled||!('speechSynthesis'in window))return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='pt-BR';u.rate=.95;speechSynthesis.speak(u)}
+function stopSpeaking(){if('speechSynthesis'in window)speechSynthesis.cancel()}
+function repeatLastIvy(){if(state.mode==='Normal'&&state.lastIvy)speak(state.lastIvy)}
+function toggleVoice(){state.voiceEnabled=!state.voiceEnabled;if(!state.voiceEnabled)stopSpeaking();document.getElementById('voiceToggle').textContent=state.voiceEnabled?'Voz da Ivy: ligada':'Voz da Ivy: desligada'}
+function setQuick(items=[]){const box=document.getElementById('quickReplies');box.innerHTML='';items.forEach(t=>{const b=document.createElement('button');b.textContent=t;b.onclick=()=>submitUserText(t);box.appendChild(b)})}
+
+function greetingFrom(text){const x=normalize(text);if(x.includes('bom dia'))return'Bom dia';if(x.includes('boa tarde'))return'Boa tarde';if(x.includes('boa noite'))return'Boa noite';if(/\b(ola|oi|opa)\b/.test(x))return'Olá';return''}
+function timeGreeting(){const h=new Date().getHours();return h<12?'Bom dia':h<18?'Boa tarde':'Boa noite'}
+function normalize(s){return(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function detectRole(text){const x=normalize(text);if(/\bvitima\b/.test(x))return'Vítima';if(/\btestemunha\b/.test(x))return'Testemunha';if(/\bsolicitante\b/.test(x)||/\bcomunicante\b/.test(x))return'Solicitante / comunicante';if(/\b(autor|autora|suspeito|suspeita)\b/.test(x))return'Autor / suspeito';return''}
+function detectReason(text){const x=normalize(text);const rules=[['Violência doméstica / familiar',['violencia domestica','marido','esposo','ex marido','companheiro','namorado','ex namorado','familia']],['Roubo',['roubo','roubou','roubado','roubada','roubaram','roubar','assalto','assaltou','assaltado','assaltada','assaltaram']],['Furto',['furto','furtou','furtado','furtada','furtaram','furtar','levaram sem eu ver','sumiu']],['Ameaça',['ameaca','ameacou']],['Injúria',['injuria','xingou','ofendeu','ofensa']],['Agressão / lesão corporal',['agressao','agrediu','bateu','apanhei','lesao']],['Estelionato / fraude',['estelionato','fraude','golpe','pix']],['Dano',['dano','danificou','quebrou']],['Perda / extravio',['perda','perdi','extravio','extraviei']]];const generic=new Set(['familia','sumiu','pix','dano','perda']);let best=null;for(const[r,words]of rules){for(const w of words){if(!x.includes(w))continue;const score=w.length+(generic.has(w)?0:30);if(!best||score>best.score)best={r,score}}}return best?best.r:''}
+function detectYesNo(text){const x=normalize(text).trim();if(/\bnao sei\b/.test(x)||/\bnao tenho certeza\b/.test(x))return'';if(/^(sim|confirmo|estou seguro|estou segura)\b/.test(x)||x.startsWith('sim,')||x.startsWith('sim '))return'yes';if(/^(nao|negativo|nao estou)\b/.test(x))return'no';return''}
+function reasonQuick(){return['Violência doméstica / familiar','Roubo','Furto','Ameaça','Injúria','Agressão / lesão corporal','Estelionato / fraude','Dano','Perda / extravio','Outro']}
+function roleQuick(){return['Vítima','Testemunha','Solicitante / comunicante','Autor / suspeito']}
+
+const LIMITS={name:80,role:40,cpf:14,birthDate:10,naturalidade:60,nacionalidade:40,estadoCivil:30,profissao:50,telefone:15,personAddress:140,story:700,place:120,when:80,people:180,witnesses:180,evidence:220,reason:80,safe:40,needsHelp:12};
+function onlyDigits(v,n){return String(v||'').replace(/\D/g,'').slice(0,n)}
+function maskCpf(v){const d=onlyDigits(v,11);if(d.length>9)return d.slice(0,3)+'.'+d.slice(3,6)+'.'+d.slice(6,9)+'-'+d.slice(9);if(d.length>6)return d.slice(0,3)+'.'+d.slice(3,6)+'.'+d.slice(6);if(d.length>3)return d.slice(0,3)+'.'+d.slice(3);return d}
+function maskPhone(v){const d=onlyDigits(v,11);if(d.length<3)return d;if(d.length<=6)return '('+d.slice(0,2)+') '+d.slice(2);if(d.length<=10)return '('+d.slice(0,2)+') '+d.slice(2,6)+'-'+d.slice(6);return '('+d.slice(0,2)+') '+d.slice(2,7)+'-'+d.slice(7)}
+function maskDate(v){const d=onlyDigits(v,8);let day=d.slice(0,2),month=d.slice(2,4),year=d.slice(4,8);if(day.length===2){const n=+day;day=String(Math.min(31,Math.max(1,n))).padStart(2,'0')}if(month.length===2){const n=+month;month=String(Math.min(12,Math.max(1,n))).padStart(2,'0')}if(year.length===4){const now=new Date().getFullYear();const n=+year;year=String(Math.min(now,Math.max(1900,n)))}if(d.length<=2)return day;if(d.length<=4)return day+'/'+month;return day+'/'+month+'/'+year}
+function cpfDigitsOk(v){const d=onlyDigits(v,11);if(d.length!==11||/^(\d)\1+$/.test(d))return false;const calc=n=>{let s=0;for(let i=0;i<n;i++)s+=+d[i]*(n+1-i);const r=(s*10)%11;return r===10?0:r};return calc(9)===+d[9]&&calc(10)===+d[10]}
+function shapeField(k,v){v=String(v||'');const plain=normalize(v);if(k==='cpf'){if(plain.includes('nao sei')||plain.includes('nao informado'))return 'Não informado';return maskCpf(v)}if(k==='telefone'){if(/[a-z]/.test(plain))return v.slice(0,LIMITS.telefone);return maskPhone(v)}if(k==='birthDate'){if(/[a-z]/.test(plain))return v.slice(0,LIMITS.birthDate);return maskDate(v)}return v.slice(0,LIMITS[k]||400)}
+function sendUserMessage(){const i=document.getElementById('chatInput');const t=i.value.trim().slice(0,500);if(!t)return;i.value='';submitUserText(t)}
+function extractName(text){
+  const t=String(text||'').replace(/\s+/g,' ').trim();
+  const m=t.match(/(?:meu nome(?: completo)?(?: é| e)|me chamo|eu me chamo|pode me chamar de)\s+(.+)/i);
+  if(!m)return'';
+  let n=m[1].split(/[,.;]/)[0].replace(/\s+(?:e o meu|e meu|e sou|e estou|e fui|e o meu|meu cpf|cpf|tenho|moro|nasci|nascido|nascida|minha data|telefone|celular|whatsapp|endereco|vitima|testemunha).*$/i,'').trim();
+  n=n.replace(/^(o|a|eu)\s+/i,'').trim();
+  const words=n.split(/\s+/).filter(Boolean);
+  if(words.length>=2&&words.length<=8&&!/\d/.test(n)&&n.length>=5)return n;
+  return'';
+}
+function looksLikeBareName(text){
+  const clean=String(text||'').replace(/\s+/g,' ').trim();
+  const words=clean.split(/\s+/).filter(Boolean);
+  if(words.length<2||words.length>6||/\d/.test(clean)||clean.length<5)return false;
+  const low=normalize(clean);
+  if(detectRole(clean)||detectReason(clean)||detectYesNo(clean))return false;
+  if(/\b(rua|avenida|setor|bairro|ontem|hoje|telefone|cpf|roubo|furto)\b/.test(low))return false;
+  return words.every(w=>/^[\p{L}'’-]+$/u.test(w));
+}
+function extractCpf(text){
+  const x=normalize(text);
+  const m=String(text).match(/\b(\d{3}\.?\d{3}\.?\d{3}-?\d{2})\b/);
+  if(m){const d=onlyDigits(m[1],11);if(d.length===11)return d}
+  if(x.includes('cpf')){const d=onlyDigits(text,11);if(d.length===11)return d}
+  return'';
+}
+function extractPhone(text){
+  const x=normalize(text);
+  const hinted=/\b(telefone|celular|whatsapp|contato|ligar)\b/.test(x);
+  const d=onlyDigits(text,11);
+  if(d.length<10)return'';
+  if(x.includes('cpf')&&d.length===11&&!hinted)return'';
+  if(hinted||d.length===10||(d.length===11&&d[2]==='9'))return d;
+  return'';
+}
+function extractBirth(text){
+  const x=normalize(text);
+  if(!/\b(nasci|nascimento|nascida|nascido|data de nascimento)\b/.test(x)&&!/^\d{1,2}[\/.\-]\d{1,2}[\/.\-]\d{2,4}$/.test(String(text).trim()))return'';
+  const parsed=parseBirthDate(text);
+  return parsed&&birthDateValid(parsed)?parsed:'';
+}
+function extractAddress(text){
+  const m=String(text||'').match(/(?:meu endereco(?: atual)?(?: é| e)|moro (?:na|no|em|à|a)|resido (?:na|no|em))\s+(.+)/i);
+  if(!m)return'';
+  return m[1].replace(/[.,;]\s*(meu|minha|cpf|telefone).*$/i,'').trim().slice(0,140);
+}
+function extractNaturalidade(text){
+  const m=String(text||'').match(/(?:minha naturalidade(?: é| e)|nasci (?:em|no|na)|sou natural de)\s+(.+)/i);
+  if(!m)return'';
+  return m[1].replace(/[.,;].*$/,'').trim().slice(0,60);
+}
+function extractCivil(text){
+  const x=normalize(text);
+  const map=[['União estável',['uniao estavel']],['Solteiro(a)',['solteir']],['Casado(a)',['casad']],['Divorciado(a)',['divorciad']],['Separado(a)',['separad']],['Viúvo(a)',['viuv']]];
+  if(!/\b(estado civil|sou |estou )\b/.test(x)&&x.split(' ').length>6)return'';
+  for(const[label,keys]of map){if(keys.some(k=>x.includes(k)))return label}
+  return'';
+}
+function extractJob(text){
+  const m=String(text||'').match(/(?:minha profiss[aã]o(?: é| e)|trabalho como|sou)\s+(.+)/i);
+  if(!m)return'';
+  const v=m[1].replace(/[.,;].*$/,'').trim();
+  if(detectRole(v)||v.length<3)return'';
+  return v.slice(0,50);
+}
+function harvestFromChat(text){
+  const labels=[];
+  const setCue=(k,v,label)=>{if(!v)return;state[k]=shapeField(k,v);if(!labels.includes(label))labels.push(label)};
+  setCue('name',extractName(text),'Nome');
+  setCue('cpf',extractCpf(text),'CPF');
+  setCue('telefone',extractPhone(text),'Telefone');
+  setCue('birthDate',extractBirth(text),'Nascimento');
+  setCue('personAddress',extractAddress(text),'Endereço');
+  setCue('naturalidade',extractNaturalidade(text),'Naturalidade');
+  setCue('estadoCivil',extractCivil(text),'Estado civil');
+  setCue('profissao',extractJob(text),'Profissão');
+  if(labels.length){syncManualFields();renderAll()}
+  return labels;
+}
+const PREFILL_SKIP=new Set(['name','cpf','birthDate','naturalidade','estadoCivil','profissao','telefone','personAddress']);
+function submitUserText(text){text=String(text||'').replace(/\s+/g,' ').trim().slice(0,500);if(!text)return;addMessage('user',text,'Pessoa atendida');processUser(text);renderAll()}
+function brief(text,n=90){const t=String(text||'').replace(/\s+/g,' ').trim();if(!t)return'';return t.length>n?t.slice(0,n-1)+'…':t}
+function yesNoQuick(q){return /\b(houve|existe|precisa|precisou|possui|havia)\b/i.test(q||'')?['Sim','Não']:[]}
+function soundsLikeVictim(low){return /\b(fui|me|minha|meu|estou|sofri|levaram|furtaram|roubaram|assaltaram)\b/.test(low)}
+function afterSafety(yn){const risk=yn==='no'?'Vou destacar que você não está em segurança. Se houver risco imediato, o atendimento humano deve ser priorizado. ':'';if(state.story&&state.reason){state.step='reasonConfirm';ivySay(risk+'Você contou: '+brief(state.story)+'. Confirmo '+state.reason+' como o motivo principal?',['Sim','Não','Escolher outra categoria']);return}state.step='story';ivySay(risk+(yn==='yes'?'Que bom que você está em segurança. ':'')+pickQuestion('story'))}
+function askNextCategory(note){if(state.categoryIndex<state.categoryQueue.length){state.step='category';const q=state.categoryQueue[state.categoryIndex].q;ivySay((note||'')+q,yesNoQuick(q));return}state.step='place';ivySay((note||'')+pickQuestion('place'))}
+const NEXT_STEP={place:'when',when:'people',people:'witnesses',witnesses:'evidence',evidence:'name',name:'cpf',cpf:'birthDate',birthDate:'naturalidade',naturalidade:'estadoCivil',estadoCivil:'profissao',profissao:'telefone',telefone:'personAddress',personAddress:'confirm'};
+const SKIPPABLE=new Set(['place','when','people','witnesses','evidence','cpf','birthDate','naturalidade','estadoCivil','profissao','telefone','personAddress']);
+const STEP_LABEL={place:'Local',when:'Horário',people:'Pessoas envolvidas',witnesses:'Testemunhas',evidence:'Provas',cpf:'CPF',birthDate:'Data de nascimento',naturalidade:'Naturalidade',estadoCivil:'Estado civil',profissao:'Profissão',telefone:'Telefone',personAddress:'Endereço'};
+const MONTHS={janeiro:1,fevereiro:2,marco:3,abril:4,maio:5,junho:6,julho:7,agosto:8,setembro:9,outubro:10,novembro:11,dezembro:12,jan:1,fev:2,mar:3,abr:4,mai:5,jun:6,jul:7,ago:8,set:9,out:10,nov:11,dez:12};
+const stepHistory=[];
+let retry={};
+function isSkip(low){return /^(pular|passar|nao sei|nao lembro|nao tenho|nao quero informar|prefiro nao (informar|dizer|responder)|nao informar|nao (vou|quero) dizer|sem (cpf|telefone|endereco))\b/.test(low)}
+function pad2(n){return String(n).padStart(2,'0')}
+function fmtDate(d){return pad2(d.getDate())+'/'+pad2(d.getMonth()+1)+'/'+d.getFullYear()}
+function parseBirthDate(text){const low=normalize(text).trim();const digits=onlyDigits(text,8);if(digits.length===8)return maskDate(digits);const m=low.match(/(\d{1,2})\s*(?:de)?\s*([a-z]{3,9})\.?\s*(?:de)?\s*(\d{4})/);if(m&&MONTHS[m[2]])return maskDate(pad2(+m[1])+pad2(MONTHS[m[2]])+m[3]);const s=low.match(/^(\d{1,2})[\/.\- ](\d{1,2})[\/.\- ](\d{2,4})$/);if(s){let y=s[3];if(y.length===2)y=(+y>new Date().getFullYear()%100?'19':'20')+y;return maskDate(pad2(+s[1])+pad2(+s[2])+y)}return''}
+function birthDateValid(masked){const m=masked.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);if(!m)return false;const d=new Date(+m[3],+m[2]-1,+m[1]);if(d.getDate()!==+m[1]||d.getMonth()!==+m[2]-1)return false;const age=(Date.now()-d.getTime())/31557600000;return age>=0&&age<=120}
+function resolveWhen(text){const low=normalize(text);const d=new Date();let hit='';if(/\banteontem\b/.test(low)){d.setDate(d.getDate()-2);hit='anteontem'}else if(/\bontem\b/.test(low)){d.setDate(d.getDate()-1);hit='ontem'}else if(/\b(hoje|agora|ha pouco|agorinha|hoje cedo)\b/.test(low)){hit='hoje'}if(!hit||/\d{1,2}\/\d{1,2}/.test(text))return text;return brief(text,60)+' ('+fmtDate(d)+')'}
+function askStep(step,prefix){
+  let s=step,n=0;
+  while(PREFILL_SKIP.has(s)&&state[s]&&String(state[s]).trim()&&state[s]!=='Não informado'&&NEXT_STEP[s]&&n++<12)s=NEXT_STEP[s];
+  state.step=s;
+  if(s==='confirm'){ivySay((prefix||'')+buildConfirmation(),['Sim, está correto','Quero corrigir']);return}
+  ivySay((prefix||'')+peekQuestion(s),currentQuick());
+}
+function skipStep(){const step=state.step;if(!SKIPPABLE.has(step)){ivySay('Essa informação é importante para o registro. '+currentQuestion(),currentQuick());return}save(step,'Não informado');askStep(NEXT_STEP[step],(STEP_LABEL[step]||'Campo')+' fica como não informado. ')}
+function goBack(){const prev=stepHistory.pop();if(!prev){ivySay('Ainda estamos no começo. '+currentQuestion(),currentQuick());return}state.step=prev.step;state.categoryIndex=prev.categoryIndex;if(prev.step==='category'&&state.details.length>prev.details)state.details.length=prev.details;ivySay('Certo, voltando. '+(prev.step==='category'&&state.categoryQueue[state.categoryIndex]?state.categoryQueue[state.categoryIndex].q:prev.step==='confirm'?buildConfirmation():currentQuestion()),currentQuick())}
+function rememberStep(){const last=stepHistory[stepHistory.length-1];if(!last||last.step!==state.step||last.categoryIndex!==state.categoryIndex)stepHistory.push({step:state.step,categoryIndex:state.categoryIndex,details:state.details.length});if(stepHistory.length>40)stepHistory.shift()}
+function processUser(text){const low=normalize(text).trim();if(low.includes('nao entendi')||/^(repete|repetir|de novo|como assim)\b/.test(low)){ivySay('Sem problema. Vou repetir: '+currentQuestion(),currentQuick());return}if(/^(voltar|volta|anterior|pergunta anterior)\b/.test(low)){goBack();return}if(wantsFinish(low)){finishAttendance();return}if(/\b(ajuda|socorro|emergencia)\b/.test(low)&&!/\bprecisa de ajuda\b/.test(low)&&low.split(' ').length<=3){raiseHelpAlert('texto');ivySay('Registrei que você precisa de ajuda. O policial já recebe esse alerta. '+currentQuestion(),currentQuick());return}if(state.step==='correction'){if(/^(cancelar|deixa|nao precisa|esta certo|tudo certo)\b/.test(low)){state.step='confirm';ivySay('Certo, mantive como estava. '+buildConfirmation(),currentQuick());return}applyCorrection(text);return}if(low.includes('corrigir')||low.includes('corrija')){if(/\s+para\s+/i.test(text)){state.step='correction';applyCorrection(text);return}state.step='correction';ivySay('Claro. Diga o campo e o valor. Exemplo: “corrigir local para Setor Central”.');return}
+
+const harvested=harvestFromChat(text);
+const harvestNote=harvested.length?'Anotei no formulário: '+harvested.join(', ')+'. ':'';
+
+if(!state.firstMessageHandled){state.firstMessageHandled=true;state.step='role'}
+if(SKIPPABLE.has(state.step)&&isSkip(low)){rememberStep();skipStep();return}
+if(state.step!=='complete'&&state.step!=='confirm')rememberStep();
+
+switch(state.step){
+ case'role':{const role=detectRole(text);const reason=detectReason(text);if(!role&&reason&&soundsLikeVictim(low)){save('role','Vítima');save('story',text);save('reason',reason);state.step='safe';ivySay('Pelo que você disse, '+brief(text)+', registrei você como vítima e o motivo como '+reason+'. '+peekQuestion('safe'),['Sim','Não']);break}if(!role){ivySay((reason?'O que você contou parece relacionado a '+reason+'. ':'')+'Ainda preciso saber sua participação. '+peekQuestion('role'),roleQuick());return}save('role',role);if(reason){save('reason',reason);if(!state.story)save('story',text)}state.step='safe';ivySay(roleResponse(role)+(reason?' Também anotei que o caso parece ser '+reason+'.':'')+' '+peekQuestion('safe'),['Sim','Não']);break}
+ case'safe':{const yn=detectYesNo(text);if(yn==='yes')save('safe','Sim');else if(yn==='no')save('safe','Não / requer atenção');else{ivySay('Responda se você está em segurança agora.',['Sim','Não']);return}afterSafety(yn);break}
+ case'story':{save('story',text);const r=detectReason(text);if(r){save('reason',r);state.step='reasonConfirm';ivySay(harvestNote+'Anotei seu relato: '+brief(text)+'. Isso se parece com '+r+'. Essa é a categoria principal?',['Sim','Não','Escolher outra categoria'])}else{state.step='reason';ivySay(harvestNote+'Anotei: '+brief(text)+'. Não consegui classificar sozinha. '+peekQuestion('reason'),reasonQuick())}break}
+ case'reasonConfirm':{if(detectYesNo(text)==='yes'){prepareCategoryQuestions();nextCategoryQuestion()}else{state.step='reason';ivySay('Tudo bem. Escolha a categoria que melhor representa o motivo.',reasonQuick())}break}
+ case'reason':{const r=detectReason(text)||reasonQuick().find(x=>normalize(x)===low)||brief(text,80);save('reason',r);ivySay('Motivo anotado: '+r+'.');prepareCategoryQuestions();nextCategoryQuestion();break}
+ case'category':{const item=state.categoryQueue[state.categoryIndex];if(item)state.details.push((item.q+' Resposta: '+text).slice(0,280));state.categoryIndex++;const yn=detectYesNo(text);const note=yn==='yes'?'Anotei que sim. ':yn==='no'?'Anotei que não. ':'Anotei: '+brief(text)+'. ';askNextCategory(note);break}
+ case'place':save('place',text);askStep('when','Local anotado: '+brief(text)+'. ');break;
+ case'when':{const w=resolveWhen(text);save('when',w);askStep('people','Horário anotado: '+brief(w)+'. ');break}
+ case'people':{const yn=detectYesNo(text);save('people',yn==='no'?'Não houve outra pessoa envolvida':text);askStep('witnesses',yn==='no'?'Registrei que não houve outra pessoa envolvida. ':'Pessoas anotadas: '+brief(text)+'. ');break}
+ case'witnesses':{const yn=detectYesNo(text);save('witnesses',yn==='yes'?'Sim':yn==='no'?'Não':text);askStep('evidence',yn==='yes'?'Registrei que houve testemunha. ':yn==='no'?'Registrei que não houve testemunha. ':'Testemunhas anotadas: '+brief(text)+'. ');break}
+ case'evidence':{const yn=detectYesNo(text);save('evidence',yn==='yes'?'Sim':yn==='no'?'Não':text);askStep('name',yn==='yes'?'Registrei que existe alguma prova. ':yn==='no'?'Registrei que não há prova informada. ':'Provas anotadas: '+brief(text)+'. ');break}
+ case'name':{const extracted=extractName(text)||(looksLikeBareName(text)?text.replace(/\s+/g,' ').trim():'');const clean=(extracted||'').replace(/\s+/g,' ').trim();const words=clean.split(' ').filter(Boolean);if(!clean||/\d/.test(clean)||words.length<2||clean.length<5){if(!retry.name){retry.name=1;ivySay(harvestNote+'Preciso do nome completo, com nome e sobrenome, sem números. '+peekQuestion('name'));return}}retry.name=0;save('name',clean);askStep('cpf',harvestNote+'Obrigado, '+brief(clean,60)+'. ');break}
+ case'cpf':{const d=onlyDigits(extractCpf(text)||text,11);if(d.length!==11){if(!retry.cpf){retry.cpf=1;ivySay('O CPF tem 11 números. Digite só os números, ou diga “não sei” para deixar em branco.',['Não sei']);return}}else if(!cpfDigitsOk(d)&&!retry.cpf){retry.cpf=1;ivySay('Esse CPF parece ter algum número errado ('+maskCpf(d)+'). Confira e digite de novo, ou diga “não sei”.',['Não sei']);return}retry.cpf=0;save('cpf',d.length===11?d:text);askStep('birthDate',harvestNote+(d.length===11&&!cpfDigitsOk(d)?'CPF anotado como informado; o policial confere. ':'CPF anotado. '));break}
+ case'birthDate':{const parsed=extractBirth(text)||parseBirthDate(text);if(!parsed||!birthDateValid(parsed)){if(!retry.birthDate){retry.birthDate=1;ivySay('Não consegui entender a data. Informe no formato dia/mês/ano, por exemplo 05/03/1990, ou diga “não sei”.');return}}retry.birthDate=0;save('birthDate',parsed&&birthDateValid(parsed)?parsed:text);askStep('naturalidade',harvestNote+'Nascimento anotado: '+brief(parsed||text,20)+'. ');break}
+ case'naturalidade':save('naturalidade',text);askStep('estadoCivil','Naturalidade anotada: '+brief(text,40)+'. ');break;
+ case'estadoCivil':save('estadoCivil',text);askStep('profissao','Estado civil anotado: '+brief(text,30)+'. ');break;
+ case'profissao':save('profissao',text);askStep('telefone','Profissão anotada: '+brief(text,40)+'. ');break;
+ case'telefone':{const d=onlyDigits(extractPhone(text)||text,11);if(d.length<10){if(!retry.telefone){retry.telefone=1;ivySay('Informe o telefone com DDD, por exemplo (62) 99999-8888, ou diga “não sei”.');return}}retry.telefone=0;save('telefone',d.length>=10?d:text);askStep('personAddress',harvestNote+'Telefone anotado'+(d.length>=10?': '+maskPhone(d):'')+'. ');break}
+ case'personAddress':save('personAddress',text);askStep('confirm','Endereço anotado: '+brief(text)+'. ');break;
+ case'confirm':{const yn=detectYesNo(text);if(yn==='yes'){state.confirmed=true;state.step='complete';if(!state.attendanceFinishedAt)state.attendanceFinishedAt=new Date().toISOString();renderAll();ivySay('Confirmado. O relatório está pronto na aba Relatório. Se quiser acrescentar algo, é só escrever aqui.',['Ver relatório','Novo atendimento']);}else{state.step='correction';ivySay('Sem problema. Diga qual informação corrigir e o valor correto. Exemplo: “corrigir telefone para (62) 99999-8888”.');}break}
+ case'complete':{if(/^ver relatorio/.test(low)){go('reportScreen');return}if(/^novo atendimento/.test(low)){startNewAttendance();return}if(wantsFinish(low)){finishAttendance({silent:true});return}save('story',(state.story?state.story+' | Informação adicional: ':'')+text);ivySay('Acrescentei ao relato: '+brief(text)+'. Na aba Relatório você gera o PDF ou inicia outro atendimento.',['Ver relatório','Novo atendimento']);break}
+ default:ivySay(currentQuestion(),currentQuick());
+ }
+}
+function roleResponse(role){if(role==='Vítima')return'Entendi. Registrei que você é a vítima.';if(role==='Testemunha')return'Entendi. Registrei que você é testemunha.';if(role==='Solicitante / comunicante')return'Entendi. Registrei que você é solicitante/comunicante.';return'Entendi. Registrei sua participação como autor/suspeito. A Ivy apenas auxilia a comunicação e não faz conclusão sobre responsabilidade.'}
+function prepareCategoryQuestions(){state.categoryQueue=categoryQuestions[state.reason]||categoryQuestions['Outro'];state.categoryIndex=0;state.step='category'}
+function nextCategoryQuestion(){if(state.categoryIndex<state.categoryQueue.length){state.step='category';const q=state.categoryQueue[state.categoryIndex].q;ivySay(q,yesNoQuick(q));return}state.step='place';ivySay(pickQuestion('place'))}
+function currentQuestion(){return peekQuestion(state.step in QUESTION_LIBRARY?state.step:'story')}
+function currentQuick(){if(state.step==='role')return withFinish(roleQuick());if(state.step==='safe'||state.step==='witnesses'||state.step==='evidence')return withFinish(['Sim','Não']);if(state.step==='people')return withFinish(['Não houve outra pessoa']);if(state.step==='complete')return['Ver relatório','Novo atendimento'];if(state.step==='when')return withFinish(['Hoje','Ontem']);if(state.step==='telefone'||state.step==='birthDate'||state.step==='personAddress'||state.step==='profissao'||state.step==='naturalidade')return withFinish(['Prefiro não informar']);if(state.step==='confirm')return['Sim, está correto','Quero corrigir','Finalizar atendimento'];if(state.step==='reasonConfirm')return withFinish(['Sim','Não','Escolher outra categoria']);if(state.step==='reason')return withFinish(reasonQuick());if(state.step==='category'){const item=state.categoryQueue[state.categoryIndex];return withFinish(item?yesNoQuick(item.q):[])}if(state.step==='cpf')return withFinish(['Não sei']);if(state.step==='estadoCivil')return withFinish(['Solteiro(a)','Casado(a)','União estável','Divorciado(a)','Viúvo(a)']);return withFinish([])}
+function withFinish(items){const q=(items||[]).slice();if(state.started&&state.step!=='complete'&&!q.includes('Finalizar atendimento'))q.push('Finalizar atendimento');return q}
+function save(k,v){state[k]=shapeField(k,String(v||'').trim());syncManualFields();renderAll()}
+function buildConfirmation(){return 'Vou resumir o que coletei:\n• Participação: '+nv(state.role)+'\n• Nome: '+nv(state.name)+'\n• Motivo informado: '+nv(state.reason)+'\n• Local: '+nv(state.place)+'\n• Quando: '+nv(state.when)+'\n• Pessoas envolvidas: '+nv(state.people)+'\n• Testemunhas: '+nv(state.witnesses)+'\n\nAs informações estão corretas?'}
+function applyCorrection(text){const x=normalize(text);const patterns=[['personAddress',['meu endereco','endereco atual','endereco da pessoa']],['place',['local do fato','endereco do fato','local']],['when',['horario','hora','quando']],['estadoCivil',['estado civil']],['naturalidade',['naturalidade']],['profissao',['profissao']],['telefone',['telefone']],['reason',['motivo','categoria']],['name',['nome']],['cpf',['cpf']]];for(const[k,keys]of patterns){if(keys.some(p=>x.includes(p))){const parts=text.split(/\s+para\s+/i);let value=(parts.length>1?parts.slice(1).join(' para '):'').trim();if(!value)value=text;save(k,value);state.step='confirm';ivySay('Certo. Atualizei essa informação. '+buildConfirmation(),['Sim, está correto','Quero corrigir']);return}}ivySay('Não consegui identificar qual campo você quer corrigir. Diga, por exemplo: “corrigir local para Rua A, 10”, ou altere o campo no painel ao lado.')}
+
+function manualUpdate(el){const k=el.dataset.field;el.value=shapeField(k,el.value);el.classList.toggle('bad',k==='cpf'&&onlyDigits(el.value,11).length===11&&!cpfDigitsOk(el.value));state[k]=el.value;renderAll()}
+function syncManualFields(){document.querySelectorAll('[data-field]').forEach(el=>{const k=el.dataset.field;if(document.activeElement!==el&&state[k]!==undefined)el.value=state[k]||'';if(k==='cpf')el.classList.toggle('bad',onlyDigits(el.value,11).length===11&&!cpfDigitsOk(el.value))})}
+function nv(v){return v&&String(v).trim()?v:'Não informado'}
+function collectedItems(){return[['Início do atendimento',state.attendanceStartedAt?formatDateTime(state.attendanceStartedAt):'Ainda não iniciado'],['Participação',state.role],['Precisa de ajuda',state.needsHelp],['Segurança atual',state.safe],['Sinais da câmera',state.signLog.length?String(state.signLog.length)+' registrados':''],['Nome',state.name],['CPF',state.cpf],['Naturalidade',state.naturalidade],['Estado civil',state.estadoCivil],['Motivo',state.reason],['Local do fato',state.place],['Quando ocorreu',state.when],['Envolvidos adicionais cadastrados',String(state.involvedPersons.length)],['Pessoas mencionadas',state.people],['Testemunhas',state.witnesses],['Provas',state.evidence]]}
+function renderDataGrid(target){const el=document.getElementById(target);el.innerHTML='';collectedItems().forEach(([l,v])=>{const d=document.createElement('div');d.className='data-item';if(l==='Precisa de ajuda'&&normalize(v).indexOf('sim')===0)d.classList.add('priority');const b=document.createElement('b');b.textContent=l;const s=document.createElement('span');s.textContent=nv(v);if(!v)s.className='missing';d.append(b,s);el.appendChild(d)})}
+function renderHelpUi(){
+  const banner=document.getElementById('policeHelpBanner');
+  if(banner)banner.classList.toggle('show',!!state.helpPriority);
+  const nav=document.getElementById('navPolice');
+  if(nav)nav.classList.toggle('alert-help',!!state.helpPriority);
+}
+function raiseHelpAlert(source){
+  state.needsHelp='Sim';
+  state.helpPriority=true;
+  if(!state.helpAlertAt)state.helpAlertAt=new Date().toISOString();
+  if(!state.helpAlerted){
+    state.helpAlerted=true;
+    const pf=document.getElementById('policeFeed');
+    if(pf){
+      const d=document.createElement('div');d.className='msg police';
+      d.textContent='ALERTA PRIORITÁRIO: a pessoa precisa de ajuda'+(source?' ('+source+')':'')+'. Encaminhe atendimento humano. Nome, CPF e demais dados já preenchidos estão no resumo.';
+      const s=document.createElement('small');s.textContent='Painel policial';d.appendChild(s);
+      pf.appendChild(d);pf.scrollTop=pf.scrollHeight;
+    }
+  }
+  setLiveStatus('AJUDA SOLICITADA · '+modeLabel());
+  renderHelpUi();
+  renderAll();
+}
+function renderAll(){renderDataGrid('collectedGrid');renderPoliceSummary();renderReport();renderSignLog();renderHelpUi();document.getElementById('policeRole').textContent='Participação: '+nv(state.role);syncManualFields()}
+function renderPoliceSummary(){renderDataGrid('policeSummary')}
+function openInvolvedForm(index=-1){
+  state.involvedEditIndex=index;
+  const box=document.getElementById('involvedFormBox');
+  if(!box)return;
+  box.classList.add('show');
+  const p=index>=0?state.involvedPersons[index]:null;
+  document.getElementById('involvedFormTitle').textContent=p?'Editar envolvido':'Novo envolvido';
+  document.getElementById('invName').value=p?.name||'';
+  document.getElementById('invRole').value=p?.role||'';
+  document.getElementById('invCpf').value=p?.cpf||'';
+  document.getElementById('invBirth').value=p?.birthDate||'';
+  document.getElementById('invNaturalidade').value=p?.naturalidade||'';
+  document.getElementById('invCivil').value=p?.estadoCivil||'';
+  document.getElementById('invPhone').value=p?.telefone||'';
+  document.getElementById('invJob').value=p?.profissao||'';
+  document.getElementById('invAddress').value=p?.address||'';
+  document.getElementById('invNotes').value=p?.notes||'';
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function cancelInvolvedForm(){
+  state.involvedEditIndex=-1;
+  const box=document.getElementById('involvedFormBox');
+  if(box)box.classList.remove('show');
+}
+function saveInvolvedPerson(){
+  const person={
+    name:shapeField('name',document.getElementById('invName').value.trim()),
+    role:document.getElementById('invRole').value,
+    cpf:shapeField('cpf',document.getElementById('invCpf').value.trim()),
+    birthDate:shapeField('birthDate',document.getElementById('invBirth').value.trim()),
+    naturalidade:shapeField('naturalidade',document.getElementById('invNaturalidade').value.trim()),
+    estadoCivil:document.getElementById('invCivil').value,
+    telefone:shapeField('telefone',document.getElementById('invPhone').value.trim()),
+    profissao:shapeField('profissao',document.getElementById('invJob').value.trim()),
+    address:document.getElementById('invAddress').value.trim().slice(0,140),
+    notes:document.getElementById('invNotes').value.trim().slice(0,280),
+    registeredAt: state.involvedEditIndex>=0 && state.involvedPersons[state.involvedEditIndex]?.registeredAt ? state.involvedPersons[state.involvedEditIndex].registeredAt : new Date().toISOString()
+  };
+  if(!person.name && !person.role){
+    alert('Informe pelo menos o nome ou a participação da pessoa envolvida.');
+    return;
+  }
+  if(state.involvedEditIndex>=0)state.involvedPersons[state.involvedEditIndex]=person;
+  else state.involvedPersons.push(person);
+  cancelInvolvedForm();
+  renderInvolvedPersons();
+  renderReport();
+}
+function editInvolvedPerson(index){openInvolvedForm(index)}
+function removeInvolvedPerson(index){
+  const p=state.involvedPersons[index];
+  if(!p)return;
+  if(!confirm('Remover '+(p.name||'esta pessoa')+' da lista de envolvidos?'))return;
+  state.involvedPersons.splice(index,1);
+  renderInvolvedPersons();
+  renderReport();
+}
+function renderInvolvedPersons(){
+  const box=document.getElementById('involvedList');
+  if(!box)return;
+  const count=document.getElementById('involvedCountLive');
+  if(count)count.textContent=state.involvedPersons.length+' '+(state.involvedPersons.length===1?'envolvido cadastrado':'envolvidos cadastrados');
+  box.innerHTML='';
+  if(!state.involvedPersons.length){
+    const empty=document.createElement('div');
+    empty.className='empty-involved';
+    empty.textContent='Nenhuma pessoa adicional cadastrada.';
+    box.appendChild(empty);
+    return;
+  }
+  state.involvedPersons.forEach((p,i)=>{
+    const card=document.createElement('div');card.className='involved-card';
+    const head=document.createElement('div');head.className='involved-card-head';
+    const info=document.createElement('div');
+    const title=document.createElement('strong');title.textContent=(p.name||'Nome não informado')+(p.role?' — '+p.role:'');
+    const detail=document.createElement('small');
+    const parts=[];
+    if(p.cpf)parts.push('CPF: '+p.cpf);
+    if(p.birthDate)parts.push('Nascimento: '+p.birthDate);
+    if(p.naturalidade)parts.push('Naturalidade: '+p.naturalidade);
+    if(p.estadoCivil)parts.push('Estado civil: '+p.estadoCivil);
+    if(p.telefone)parts.push('Telefone: '+p.telefone);
+    if(p.profissao)parts.push('Profissão: '+p.profissao);
+    if(p.address)parts.push('Endereço: '+p.address);
+    if(p.notes)parts.push('Obs.: '+p.notes);
+    if(p.registeredAt)parts.push('Cadastrado em: '+formatDateTime(p.registeredAt));
+    detail.textContent=parts.join(' • ')||'Sem dados complementares.';
+    info.append(title,detail);
+    const actions=document.createElement('div');actions.className='involved-actions';
+    const edit=document.createElement('button');edit.type='button';edit.className='mini-btn';edit.textContent='Editar';edit.onclick=()=>editInvolvedPerson(i);
+    const del=document.createElement('button');del.type='button';del.className='mini-btn danger';del.textContent='Remover';del.onclick=()=>removeInvolvedPerson(i);
+    actions.append(edit,del);head.append(info,actions);card.appendChild(head);box.appendChild(card);
+  });
+}
+function involvedPersonsText(){
+  if(!state.involvedPersons.length)return'Não informado';
+  return state.involvedPersons.map((p,i)=>{
+    const title=`ENVOLVIDO ${i+1}${p.role?' — '+p.role.toUpperCase():''}`;
+    const lines=[
+      title,
+      `Nome: ${nv(p.name)}`,
+      `Participação: ${nv(p.role)}`,
+      `CPF: ${nv(p.cpf)}`,
+      `Nascimento: ${nv(p.birthDate)}`,
+      `Naturalidade: ${nv(p.naturalidade)}`,
+      `Estado civil: ${nv(p.estadoCivil)}`,
+      `Profissão: ${nv(p.profissao)}`,
+      `Telefone: ${nv(p.telefone)}`,
+      `Endereço: ${nv(p.address)}`,
+      `Observações: ${nv(p.notes)}`,
+      `Cadastrado em: ${p.registeredAt?formatDateTime(p.registeredAt):'Não informado'}`
+    ];
+    return lines.join('\n');
+  }).join('\n\n');
+}
+function renderReportInvolvedPersons(){
+  const box=document.getElementById('rInvolvedPersons');
+  if(!box)return;
+  box.innerHTML='';
+  if(!state.involvedPersons.length){
+    const empty=document.createElement('div');
+    empty.className='report-person-empty';
+    empty.textContent='Nenhuma pessoa envolvida adicional cadastrada.';
+    box.appendChild(empty);
+    return;
+  }
+  state.involvedPersons.forEach((p,i)=>{
+    const card=document.createElement('section');
+    card.className='report-person-card';
+
+    const title=document.createElement('div');
+    title.className='report-person-title';
+    title.textContent=`ENVOLVIDO ${i+1}${p.role?' — '+p.role.toUpperCase():''}`;
+    card.appendChild(title);
+
+    const grid=document.createElement('div');
+    grid.className='report-person-grid';
+    const fields=[
+      ['NOME',p.name],
+      ['PARTICIPAÇÃO',p.role],
+      ['CPF',p.cpf],
+      ['NASCIMENTO',p.birthDate],
+      ['NATURALIDADE',p.naturalidade],
+      ['ESTADO CIVIL',p.estadoCivil],
+      ['PROFISSÃO',p.profissao],
+      ['TELEFONE',p.telefone],
+      ['ENDEREÇO',p.address,'full'],
+      ['OBSERVAÇÕES',p.notes,'full'],
+      ['CADASTRADO EM',p.registeredAt?formatDateTime(p.registeredAt):'','full']
+    ];
+    fields.forEach(([label,value,wide])=>{
+      const field=document.createElement('div');
+      field.className='report-person-field'+(wide?' full':'');
+      const b=document.createElement('b');
+      b.textContent=label;
+      const span=document.createElement('span');
+      span.textContent=nv(value);
+      field.append(b,span);
+      grid.appendChild(field);
+    });
+    card.appendChild(grid);
+    box.appendChild(card);
+  });
+}
+function formatDateTime(value){
+  if(!value)return'';
+  const d=new Date(value);
+  if(Number.isNaN(d.getTime()))return value;
+  return new Intl.DateTimeFormat('pt-BR',{dateStyle:'short',timeStyle:'medium'}).format(d);
+}
+function signEffect(frase){const low=normalize(frase);if(low.includes('precisa')&&low.includes('ajuda'))return'Registrou que a pessoa precisa de ajuda';if(low.includes('te amo'))return'Sinal “eu te amo” registrado na conversa';if(low.includes('bom dia')||low.includes('boa noite')||low.includes('boa tarde'))return'Cumprimento registrado na conversa';return'Sinal incluído no atendimento'}
+function recordCameraSign(frase,confidence){const item={at:new Date().toISOString(),frase:String(frase||'').trim(),confidence:Math.round((Number(confidence)||0)*100),effect:signEffect(frase)};if(!item.frase)return;const last=state.signLog[state.signLog.length-1];if(last&&last.frase===item.frase&&(Date.now()-new Date(last.at).getTime())<2800)return;state.signLog.push(item);if(state.signLog.length>80)state.signLog.shift();renderSignLog();renderReport();renderDataGrid('collectedGrid')}
+function renderSignLog(){const live=document.getElementById('signLogLive');if(live){live.innerHTML='';state.signLog.slice().reverse().forEach(item=>{const d=document.createElement('div');d.className='sign-item';const left=document.createElement('div');const b=document.createElement('b');b.textContent=item.frase;const s=document.createElement('small');s.textContent=item.effect+(item.confidence?' · '+item.confidence+'%':'');left.append(b,s);const t=document.createElement('span');t.className='when';t.textContent=formatDateTime(item.at);d.append(left,t);live.appendChild(d)})}const box=document.getElementById('rSignLog');if(!box)return;box.innerHTML='';if(!state.signLog.length){const empty=document.createElement('div');empty.className='report-person-empty';empty.textContent='Nenhum sinal da câmera foi confirmado neste atendimento.';box.appendChild(empty);return}state.signLog.forEach((item,i)=>{const card=document.createElement('div');card.className='report-person-card';const title=document.createElement('div');title.className='report-person-title';title.textContent=(i+1)+'. '+item.frase+(item.confidence?' ('+item.confidence+'%)':'');const grid=document.createElement('div');grid.className='report-person-grid';[['HORÁRIO',formatDateTime(item.at)],['O QUE FOI REGISTRADO',item.effect]].forEach(([l,v])=>{const field=document.createElement('div');field.className='report-person-field';const b=document.createElement('b');b.textContent=l;const span=document.createElement('span');span.textContent=nv(v);field.append(b,span);grid.appendChild(field)});card.append(title,grid);box.appendChild(card)})}
+function renderReport(){document.getElementById('rOrg').textContent='Órgão: '+nv(state.org);setText('rMode',reportModeLabel());setText('rRole',state.role);setText('rStart',formatDateTime(state.attendanceStartedAt));setText('rFinish',state.attendanceFinishedAt?formatDateTime(state.attendanceFinishedAt):'Em andamento');setText('rInvolvedCount',String(state.involvedPersons.length));setText('rName',state.name);setText('rCpf',state.cpf);setText('rBirth',state.birthDate);setText('rNatural',[state.naturalidade,state.nacionalidade].filter(Boolean).join(' / '));setText('rCivil',state.estadoCivil);setText('rJob',state.profissao);setText('rPhone',state.telefone);setText('rPersonAddress',state.personAddress);setText('rReason',state.reason);setText('rSafe',state.safe);setText('rHelp',state.needsHelp);setText('rPlace',state.place);setText('rWhen',state.when);setText('rPeople',state.people);setText('rWitness',state.witnesses);renderReportInvolvedPersons();setText('rEvidence',state.evidence);setText('rDetails',state.details.join(' | '));setText('rStory',state.story);renderSignLog();const hint=document.getElementById('reportBarHint');if(hint)hint.textContent=state.attendanceFinishedAt?'Atendimento encerrado. Gere o PDF no topo desta aba ou inicie outro com o histórico zerado.':state.started?'Atendimento em andamento. Você já pode gerar o PDF. Novo atendimento apaga o histórico da tela.':'Nenhum atendimento em curso. Comece pela tela inicial.'}
+function setText(id,v){document.getElementById(id).textContent=nv(v)}
+
+
+// ==========================================================
+// FINALIZAÇÃO — PDF, IMPRESSÃO E COMPARTILHAMENTO
+// ==========================================================
+function reportFileName(){
+  const base=(state.name||'atendimento').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'_').replace(/^_+|_+$/g,'');
+  const d=new Date();
+  const stamp=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+  return `ivy_libra_relato_${base||'atendimento'}_${stamp}.pdf`;
+}
+function reportPlainText(){
+  const lines=[
+    'IVY LIBRAS — Atendimento Policial Acessível v4',
+    'PROTÓTIPO ACADÊMICO — NÃO É DOCUMENTO POLICIAL OFICIAL',
+    '',
+    `Órgão: ${nv(state.org)}`,
+    `Modo de atendimento: ${reportModeLabel()}`,
+    `Participação: ${nv(state.role)}`,
+    `Precisa de ajuda: ${nv(state.needsHelp)}`,
+    `Início do atendimento: ${nv(formatDateTime(state.attendanceStartedAt))}`,
+    `Finalização do atendimento: ${state.attendanceFinishedAt?formatDateTime(state.attendanceFinishedAt):'Em andamento'}`,
+    `Quantidade de envolvidos cadastrados: ${state.involvedPersons.length}`,
+    '',
+    'IDENTIFICAÇÃO',
+    `Nome: ${nv(state.name)}`,
+    `CPF: ${nv(state.cpf)}`,
+    `Nascimento: ${nv(state.birthDate)}`,
+    `Naturalidade / Nacionalidade: ${nv([state.naturalidade,state.nacionalidade].filter(Boolean).join(' / '))}`,
+    `Estado civil: ${nv(state.estadoCivil)}`,
+    `Profissão: ${nv(state.profissao)}`,
+    `Telefone: ${nv(state.telefone)}`,
+    `Endereço: ${nv(state.personAddress)}`,
+    '',
+    'OCORRÊNCIA',
+    `Motivo informado: ${nv(state.reason)}`,
+    `Segurança atual: ${nv(state.safe)}`,
+    `Local do fato: ${nv(state.place)}`,
+    `Data/horário informado: ${nv(state.when)}`,
+    `Pessoas envolvidas: ${nv(state.people)}`,
+    `Testemunhas: ${nv(state.witnesses)}`,
+    '',
+    'PESSOAS ENVOLVIDAS CADASTRADAS',
+    involvedPersonsText(),
+    '',
+    `Provas/documentos: ${nv(state.evidence)}`,
+    `Detalhes específicos: ${nv(state.details.join(' | '))}`,
+    '',
+    'SINAIS RECONHECIDOS PELA CÂMERA',
+    state.signLog.length?state.signLog.map((item,i)=>`${i+1}. ${formatDateTime(item.at)} — ${item.frase}${item.confidence?' ('+item.confidence+'%)':''} — ${item.effect}`).join('\n'):'Nenhum sinal da câmera foi confirmado neste atendimento.',
+    '',
+    'RELATO',
+    nv(state.story),
+    '',
+    `Gerado em: ${new Date().toLocaleString('pt-BR')}`
+  ];
+  return lines.join('\n');
+}
+function setShareStatus(text,type=''){
+  ['shareStatus','reportBarStatus'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(!el)return;
+    el.textContent=text;
+    el.className='share-status'+(type?' '+type:'');
+  });
+}
+function createReportPdfBlob(){
+  if(!window.jspdf || !window.jspdf.jsPDF){
+    throw new Error('Biblioteca de PDF não carregou. Verifique a internet ou use Imprimir > Salvar como PDF.');
+  }
+  renderReport();
+  const {jsPDF}=window.jspdf;
+  const doc=new jsPDF({unit:'mm',format:'a4'});
+  const margin=16, pageWidth=210, pageHeight=297, usable=pageWidth-(margin*2);
+  let y=18;
+  const addLine=(text,size=10,bold=false,gap=5)=>{
+    doc.setFont('helvetica',bold?'bold':'normal');
+    doc.setFontSize(size);
+    const chunks=doc.splitTextToSize(String(text||''),usable);
+    for(const line of chunks){
+      if(y>pageHeight-18){doc.addPage();y=18;}
+      doc.text(line,margin,y); y+=gap;
+    }
+  };
+  addLine('IVY LIBRAS — Atendimento Policial Acessível v4',16,true,7);
+  addLine('Protótipo acadêmico — não é documento policial oficial',9,false,7);
+  addLine(`Órgão: ${nv(state.org)}   |   Modo: ${reportModeLabel()}   |   Participação: ${nv(state.role)}`,10,true,6);
+  addLine(`Início: ${nv(formatDateTime(state.attendanceStartedAt))}   |   Finalização: ${state.attendanceFinishedAt?formatDateTime(state.attendanceFinishedAt):'Em andamento'}`,9,false,5);
+  addLine(`Envolvidos cadastrados: ${state.involvedPersons.length}`,9,false,7);
+  addLine('IDENTIFICAÇÃO',12,true,6);
+  addLine(`Nome: ${nv(state.name)}`);
+  addLine(`CPF: ${nv(state.cpf)}   |   Nascimento: ${nv(state.birthDate)}`);
+  addLine(`Naturalidade/Nacionalidade: ${nv([state.naturalidade,state.nacionalidade].filter(Boolean).join(' / '))}`);
+  addLine(`Estado civil: ${nv(state.estadoCivil)}   |   Profissão: ${nv(state.profissao)}`);
+  addLine(`Telefone: ${nv(state.telefone)}`);
+  addLine(`Endereço: ${nv(state.personAddress)}`,10,false,7);
+  addLine('DADOS DA OCORRÊNCIA',12,true,6);
+  addLine(`Motivo informado: ${nv(state.reason)}`);
+  addLine(`Segurança atual: ${nv(state.safe)}`);
+  addLine(`Local do fato: ${nv(state.place)}`);
+  addLine(`Data/horário informado: ${nv(state.when)}`);
+  addLine(`Pessoas envolvidas: ${nv(state.people)}`);
+  addLine(`Testemunhas: ${nv(state.witnesses)}`);
+  addLine('PESSOAS ENVOLVIDAS CADASTRADAS',11,true,7);
+  if(state.involvedPersons.length){
+    state.involvedPersons.forEach((p,i)=>{
+      addLine(`ENVOLVIDO ${i+1}${p.role?' — '+p.role.toUpperCase():''}`,10,true,5);
+      addLine(`Nome: ${nv(p.name)}`,9,false,4.5);
+      addLine(`Participação: ${nv(p.role)}`,9,false,4.5);
+      addLine(`CPF: ${nv(p.cpf)}`,9,false,4.5);
+      addLine(`Nascimento: ${nv(p.birthDate)}`,9,false,4.5);
+      addLine(`Naturalidade: ${nv(p.naturalidade)}`,9,false,4.5);
+      addLine(`Estado civil: ${nv(p.estadoCivil)}`,9,false,4.5);
+      addLine(`Profissão: ${nv(p.profissao)}`,9,false,4.5);
+      addLine(`Telefone: ${nv(p.telefone)}`,9,false,4.5);
+      addLine(`Endereço: ${nv(p.address)}`,9,false,4.5);
+      addLine(`Observações: ${nv(p.notes)}`,9,false,4.5);
+      addLine(`Cadastrado em: ${p.registeredAt?formatDateTime(p.registeredAt):'Não informado'}`,9,false,7);
+    });
+  }else{
+    addLine('Nenhuma pessoa envolvida adicional cadastrada.',9,false,6);
+  }
+  addLine(`Provas/documentos: ${nv(state.evidence)}`);
+  addLine(`Detalhes específicos: ${nv(state.details.join(' | '))}`,10,false,7);
+  addLine('SINAIS RECONHECIDOS PELA CÂMERA',12,true,6);
+  if(state.signLog.length){
+    state.signLog.forEach((item,i)=>{
+      addLine(`${i+1}. ${item.frase}${item.confidence?' ('+item.confidence+'%)':''}`,10,true,5);
+      addLine(`${formatDateTime(item.at)} — ${item.effect}`,9,false,6);
+    });
+  }else{
+    addLine('Nenhum sinal da câmera foi confirmado neste atendimento.',9,false,6);
+  }
+  addLine('RELATO',12,true,6);
+  addLine(nv(state.story),10,false,6);
+  addLine(`Gerado em: ${new Date().toLocaleString('pt-BR')}`,8,false,5);
+  return doc.output('blob');
+}
+function ensureFinishedTimestamp(){if(!state.attendanceFinishedAt)state.attendanceFinishedAt=new Date().toISOString();renderReport();}
+function finalizeAndPrint(){ensureFinishedTimestamp();window.print()}
+
+function downloadReportPdf(){
+  try{ensureFinishedTimestamp();
+    const blob=createReportPdfBlob();
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download=reportFileName();document.body.appendChild(a);a.click();a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1500);
+    setShareStatus('PDF gerado. Você pode abrir o arquivo, imprimir ou anexá-lo onde desejar.','ok');
+  }catch(err){
+    setShareStatus(err.message+' Como alternativa, use o botão Imprimir e escolha “Salvar como PDF”.','warn');
+  }
+}
+async function shareReportPdf(){
+  try{ensureFinishedTimestamp();
+    const blob=createReportPdfBlob();
+    const file=new File([blob],reportFileName(),{type:'application/pdf'});
+    if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
+      await navigator.share({title:'Relato IVY LIBRAS',text:'Relato do atendimento IVY LIBRAS para conferência.',files:[file]});
+      setShareStatus('Compartilhamento aberto. Escolha WhatsApp, E-mail/Gmail ou outro aplicativo.','ok');
+      return;
+    }
+    downloadReportPdf();
+    setShareStatus('Este navegador não permite compartilhar arquivos diretamente. O PDF foi baixado; anexe-o no WhatsApp ou e-mail.','warn');
+  }catch(err){
+    if(err && err.name==='AbortError')return;
+    setShareStatus('Não foi possível compartilhar diretamente. Gere o PDF e anexe o arquivo manualmente.','warn');
+  }
+}
+function emailReport(){
+  ensureFinishedTimestamp();
+  try{downloadReportPdf()}catch(e){}
+  const subject=encodeURIComponent('Relato de atendimento — IVY LIBRAS');
+  const body=encodeURIComponent('Olá,\n\nSegue o relato do atendimento IVY LIBRAS. O PDF foi gerado/baixado no dispositivo; anexe o arquivo a este e-mail antes de enviar.\n\nResumo:\n'+reportPlainText().slice(0,2800));
+  window.location.href=`mailto:?subject=${subject}&body=${body}`;
+  setShareStatus('O e-mail foi aberto. Anexe o PDF gerado antes de enviar. Navegadores não permitem anexar automaticamente um arquivo por mailto.','warn');
+}
+function whatsappReport(){
+  ensureFinishedTimestamp();
+  try{downloadReportPdf()}catch(e){}
+  const text=encodeURIComponent('Relato de atendimento IVY LIBRAS. O PDF foi gerado/baixado no dispositivo. Anexe o arquivo PDF nesta conversa antes de enviar.\n\nResumo:\n'+reportPlainText().slice(0,1800));
+  window.open('https://wa.me/?text='+text,'_blank','noopener');
+  setShareStatus('O WhatsApp foi aberto. Anexe o PDF gerado à conversa antes de enviar. Em celulares compatíveis, o botão “Compartilhar PDF” envia o próprio arquivo pelo menu nativo.','warn');
+}
+
+// ==========================================================
+// VOZ — SOMENTE NO ATENDIMENTO NORMAL
+// ==========================================================
+let recognition=null,recognizing=false;
+function getRecognition(){const R=window.SpeechRecognition||window.webkitSpeechRecognition;if(!R)return null;if(recognition)return recognition;recognition=new R();recognition.lang='pt-BR';recognition.interimResults=false;recognition.continuous=false;recognition.onstart=()=>{recognizing=true;document.getElementById('micBtn').classList.add('listening');document.getElementById('voiceStatus').textContent='Ouvindo...'};recognition.onend=()=>{recognizing=false;document.getElementById('micBtn').classList.remove('listening');if(document.getElementById('voiceStatus').textContent==='Ouvindo...')document.getElementById('voiceStatus').textContent=''};recognition.onerror=e=>{document.getElementById('voiceStatus').textContent='Não foi possível reconhecer a fala: '+e.error};recognition.onresult=e=>{const t=e.results[0][0].transcript;document.getElementById('voiceStatus').textContent='Entendido: '+t;submitUserText(t)};return recognition}
+function toggleMic(){if(state.mode!=='Normal')return;const r=getRecognition();if(!r){document.getElementById('voiceStatus').textContent='Este navegador não oferece reconhecimento de voz. Use Chrome ou Edge atualizado.';return}try{if(recognizing)r.stop();else r.start()}catch(e){document.getElementById('voiceStatus').textContent='Microfone indisponível. Verifique a permissão do navegador.'}}
+function stopMic(){if(recognition&&recognizing)try{recognition.stop()}catch(e){}}
+
+// ==========================================================
+// CÂMERA/GRAVAÇÃO — SOMENTE NO MODO LIBRAS
+// ==========================================================
+let mediaStream=null,mediaRecorder=null,recordedChunks=[];
+let recognizeTimer=null,lastSign='',signStreak=0,lastSubmittedSign='',signReleased=true,frameInFlight=false;
+function handleRecognizedSign(frase,confidence){
+  if(!frase)return;
+  if(frase===lastSubmittedSign&&!signReleased)return;
+  lastSubmittedSign=frase;signReleased=false;
+  recordCameraSign(frase,confidence);
+  const low=normalize(frase);
+  if(low.includes('precisa')&&low.includes('ajuda')){
+    raiseHelpAlert('câmera');
+    ivySay('Registrei que você precisa de ajuda. Isso já foi encaminhado com prioridade ao painel policial. Pode seguir pela pergunta atual.',currentQuick());
+    return;
+  }
+  if(low.includes('bom dia')||low.includes('boa noite')||low.includes('boa tarde')){
+    const g=greetingFrom(frase)||'Olá';
+    ivySay(g+'! Cumprimento registrado e incluído no relatório. A pergunta atual continua valendo.',currentQuick());
+    return;
+  }
+  if(low.includes('te amo')){
+    ivySay('Sinal “eu te amo” registrado. A pergunta atual continua valendo.',currentQuick());
+    return;
+  }
+  submitUserText(frase);
+}
+async function startCamera(){if(state.mode!=='Libras')return;try{try{mediaStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user'},audio:false});}catch(err){mediaStream=await navigator.mediaDevices.getUserMedia({video:true,audio:false});}const v=document.getElementById('cameraVideo');v.srcObject=mediaStream;v.style.display='block';document.getElementById('cameraHint').style.display='none';document.getElementById('cameraStatus').textContent='Câmera ligada. Faça o sinal. Quando confirmar, a frase entra na conversa.';fetch('/api/recognize/reset',{method:'POST'}).catch(()=>{});lastSign='';signStreak=0;signReleased=true;if(recognizeTimer)clearInterval(recognizeTimer);recognizeTimer=setInterval(sendSignFrame,280);}catch(e){document.getElementById('cameraStatus').textContent='Não foi possível abrir a câmera. Permita o acesso no navegador.';}}
+function stopCamera(){if(recognizeTimer){clearInterval(recognizeTimer);recognizeTimer=null;}if(mediaRecorder&&mediaRecorder.state==='recording')mediaRecorder.stop();if(mediaStream){mediaStream.getTracks().forEach(t=>t.stop());mediaStream=null}const v=document.getElementById('cameraVideo');if(v){v.srcObject=null;v.style.display='none';}const hint=document.getElementById('cameraHint');if(hint)hint.style.display='block';const st=document.getElementById('cameraStatus');if(st)st.textContent='Câmera desligada.';}
+async function sendSignFrame(){const v=document.getElementById('cameraVideo');if(!v||!v.videoWidth||frameInFlight)return;frameInFlight=true;try{const scale=Math.min(1,720/v.videoWidth);const c=document.createElement('canvas');c.width=Math.round(v.videoWidth*scale);c.height=Math.round(v.videoHeight*scale);c.getContext('2d').drawImage(v,0,0,c.width,c.height);const blob=await new Promise(r=>c.toBlob(r,'image/jpeg',0.85));if(!blob)return;const fd=new FormData();fd.append('frame',blob,'frame.jpg');const res=await fetch('/api/recognize',{method:'POST',body:fd});const data=await res.json();const status=document.getElementById('cameraStatus');const low=normalize(data&&data.frase||data&&data.candidate||'');const urgent=!!(data&&data.priority)||(low.includes('precisa')&&low.includes('ajuda'));const love=low.includes('te amo');if(!data||data.waiting||!data.frase){signStreak=0;if(!data||!data.hands){signReleased=true;if(status)status.textContent='Câmera ligada. Mostre as mãos para a câmera.';}else if(status){status.textContent=data.candidate?'Reconhecendo: '+data.candidate+'… mantenha o sinal.':'Mão detectada. Faça o sinal com calma.';}if(urgent&&data&&data.candidate&&data.hands){if(status)status.textContent='PRIORIDADE · reconhecendo precisa de ajuda…';return;}return;}if(data.frase===lastSign)signStreak++;else{lastSign=data.frase;signStreak=1;}if(status)status.textContent=(urgent?'PRIORIDADE · ':'')+'Sinal: '+data.frase+' ('+Math.round((data.confidence||0)*100)+'%)';const need=urgent||love?1:2;if(signStreak>=need){signStreak=0;handleRecognizedSign(data.frase,data.confidence);}}catch(e){const status=document.getElementById('cameraStatus');if(status)status.textContent='Falha ao consultar o reconhecimento.';}finally{frameInFlight=false;}}
+function toggleRecording(){if(state.mode!=='Libras')return;if(!mediaStream){document.getElementById('cameraStatus').textContent='Ligue a câmera antes de gravar.';return}if(mediaRecorder&&mediaRecorder.state==='recording'){mediaRecorder.stop();return}recordedChunks=[];try{mediaRecorder=new MediaRecorder(mediaStream);mediaRecorder.ondataavailable=e=>{if(e.data.size)recordedChunks.push(e.data)};mediaRecorder.onstart=()=>{document.getElementById('recordBtn').textContent='⏹ Parar gravação';document.getElementById('recordBtn').classList.add('recording');document.getElementById('cameraStatus').textContent='Gravando sinalização...'};mediaRecorder.onstop=()=>{const blob=new Blob(recordedChunks,{type:mediaRecorder.mimeType||'video/webm'});const url=URL.createObjectURL(blob);const p=document.getElementById('recordPreview');p.src=url;p.style.display='block';document.getElementById('recordBtn').textContent='⏺ Gravar sinalização';document.getElementById('recordBtn').classList.remove('recording');document.getElementById('cameraStatus').textContent='Gravação pronta para revisão nesta sessão.';addMessage('user','[Vídeo de sinalização gravado e disponível para revisão no terminal]','Pessoa atendida — Libras')};mediaRecorder.start()}catch(e){document.getElementById('cameraStatus').textContent='A gravação de vídeo não é compatível com este navegador.'}}
+
+// ==========================================================
+// PAINEL DO POLICIAL
+// ==========================================================
+function sendPoliceMessage(){const i=document.getElementById('policeInput');const t=i.value.replace(/\s+/g,' ').trim().slice(0,300);if(!t)return;i.value='';addMessage('police',t,'Policial');if(state.mode==='Normal'&&state.voiceEnabled)speak('Pergunta do policial: '+t);state.lastIvy=t;go('attendScreen')}
+
+// VLibras oficial: o script atual inicializa automaticamente segundo a documentação atual.
+window.addEventListener('load',()=>{renderAll();applyModeUI()});
+
+document.addEventListener('DOMContentLoaded',()=>{renderInvolvedPersons();});
+</script>
+</body>
+</html>

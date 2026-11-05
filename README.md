@@ -4,6 +4,12 @@ Totem de atendimento da Polícia Civil acessível em Libras. A câmera reconhece
 
 Protótipo acadêmico. Não gera boletim oficial e não substitui o atendimento humano.
 
+## Documentação
+
+A documentação completa do projeto está em um único arquivo:
+
+**[DOCUMENTACAO.docx](DOCUMENTACAO.docx)** — manual do IVY LIBRAS (ambiente, uso, API REST, reconhecimento e totem).
+
 ## Ambiente
 
 Use **Python 3.13** (o 3.14 não tem OpenCV/MediaPipe neste projeto).
@@ -118,8 +124,3 @@ Sinais nesta versão: **bom dia**, **boa noite**, **precisa de ajuda**, **te amo
 - A Ivy não usa IA generativa. Ela classifica o motivo (roubo, furto, ameaça…) e segue o roteiro.
 - Na conversa: **voltar**, **pular** / **prefiro não informar**, **não entendi**, **corrigir local para …**.
 - Relatório: PDF, impressão, e-mail, WhatsApp e **Novo atendimento** (limpa a tela).
-
-## Documentação
-
-- [DOCUMENTACAO.md](DOCUMENTACAO.md) — manual completo (instalação, treino, API REST).
-- [DOCUMENTACAO_APRESENTACAO.md](DOCUMENTACAO_APRESENTACAO.md) — só o que entra na demonstração do site.
